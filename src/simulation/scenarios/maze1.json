@@ -1,0 +1,143 @@
+{
+  "name": "Maze 1",
+  "description": "Simple maze for testing path planning algorithms.",
+
+  "world": {
+    "width": 20,
+    "height": 15,
+    "unit": "m"
+  },
+
+  "obstacles": [
+    {
+      "id": "wall_top",
+      "type": "rectangle",
+      "pose": {
+        "x": 10.0,
+        "y": 14.75,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 20.0,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "wall_bottom",
+      "type": "rectangle",
+      "pose": {
+        "x": 10.0,
+        "y": 0.25,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 20.0,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "wall_left",
+      "type": "rectangle",
+      "pose": {
+        "x": 0.25,
+        "y": 7.5,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 15.0
+      }
+    },
+    {
+      "id": "wall_right",
+      "type": "rectangle",
+      "pose": {
+        "x": 19.75,
+        "y": 7.5,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 15.0
+      }
+    },
+
+    {
+      "id": "maze_1",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.0,
+        "y": 11.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 1.0,
+        "height": 6.0
+      }
+    },
+    {
+      "id": "maze_2",
+      "type": "rectangle",
+      "pose": {
+        "x": 8.0,
+        "y": 4.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 1.0,
+        "height": 8.0
+      }
+    },
+    {
+      "id": "maze_3",
+      "type": "rectangle",
+      "pose": {
+        "x": 12.0,
+        "y": 10.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 5.0,
+        "height": 1.0
+      }
+    },
+    {
+      "id": "maze_4",
+      "type": "rectangle",
+      "pose": {
+        "x": 14.0,
+        "y": 5.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "width": 1.0,
+        "height": 6.0
+      }
+    },
+
+    {
+      "id": "pillar_1",
+      "type": "circle",
+      "pose": {
+        "x": 10.0,
+        "y": 8.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "radius": 0.8
+      }
+    },
+    {
+      "id": "pillar_2",
+      "type": "circle",
+      "pose": {
+        "x": 4.0,
+        "y": 5.0,
+        "theta": 0.0
+      },
+      "geometry": {
+        "radius": 1.0
+      }
+    }
+  ]
+}
