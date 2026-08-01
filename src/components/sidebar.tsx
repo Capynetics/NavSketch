@@ -1,53 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from 'react';
-
-type ParametersState = {
-  simulation: {
-    running: boolean;
-    timestep: number;
-  };
-  robot: {
-    model: string;
-    radius: number;
-    maxLinearVelocity: number;
-    maxAngularVelocity: number;
-    initialPose: {
-      x: number;
-      y: number;
-      theta: number;
-    };
-  };
-  goal: {
-    x: number;
-    y: number;
-  };
-  planner: {
-    algorithm: string;
-  };
-  lidar: {
-    enabled: boolean;
-    range: number;
-    resolution: number;
-    fieldOfView: number;
-  };
-  environment: {
-    scenario: string;
-  };
-  visualization: {
-    showGrid: boolean;
-    showRobot: boolean;
-    showGoal: boolean;
-    showObstacles: boolean;
-    showTrajectory: boolean;
-    showLidar: boolean;
-    showRobotHeading: boolean;
-    showCollisionRadius: boolean;
-    showPlannerGraph: boolean;
-  };
-  statistics: {
-    showSimulationTime: boolean;
-    showDistanceTravelled: boolean;
-  };
-};
+import type { ParametersState } from '../types/parameters';
 
 type SidebarProps = {
   parameters: ParametersState;
@@ -156,6 +108,10 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
     <aside
       className="bg-dark text-white p-3 d-flex flex-column gap-3"
       style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 10,
         width: collapsed ? '72px' : '320px',
         transition: 'width 0.2s ease-in-out',
         minHeight: '100vh',
@@ -163,6 +119,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
         overflowX: 'hidden',
         overflowY: 'auto',
         flexShrink: 0,
+        boxShadow: '0 0 24px rgba(0, 0, 0, 0.35)',
       }}
     >
       <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center' : 'justify-content-between'}`}>
@@ -315,6 +272,29 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 step="0.001"
                 onChange={(event) => updateSimulation({ timestep: Number(event.target.value) })}
               />
+            </div>
+
+            <div className="row g-2 mb-3">
+              <div className="col-6">
+                <label className="form-label small text-secondary">Canvas Width</label>
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  value={parameters.simulation.canvasWidth}
+                  step="1"
+                  onChange={(event) => updateSimulation({ canvasWidth: Number(event.target.value) })}
+                />
+              </div>
+              <div className="col-6">
+                <label className="form-label small text-secondary">Canvas Height</label>
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  value={parameters.simulation.canvasHeight}
+                  step="1"
+                  onChange={(event) => updateSimulation({ canvasHeight: Number(event.target.value) })}
+                />
+              </div>
             </div>
 
             <div className="mb-3">

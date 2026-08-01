@@ -1,12 +1,16 @@
 
 import { useState } from "react";
 import Sidebar from './components/sidebar';
+import { SimulationCanvas } from "./components/SimulationCanvas";
+import type { ParametersState } from "./types/parameters";
 
 function App() {
-  const [parameters, setParameters] = useState({
+    const [parameters, setParameters] = useState<ParametersState>({
     simulation: {
         running: false,
         timestep: 0.016,
+         canvasWidth: 1280,
+         canvasHeight: 720,
     },
 
     robot: {
@@ -60,10 +64,30 @@ function App() {
   });
 
   return (
-    <Sidebar
-      parameters={parameters}
-      setParameters={setParameters}
-     />
+        <div
+            style={{
+                position: "relative",
+                minHeight: "100vh",
+                width: "100%",
+                overflow: "hidden",
+            }}
+        >
+            <div
+                style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <SimulationCanvas parameters={parameters} />
+            </div>
+            <Sidebar
+                parameters={parameters}
+                setParameters={setParameters}
+            />
+        </div>
   );
 }
 
