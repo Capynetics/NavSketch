@@ -1,3 +1,18 @@
+export type ScenarioObstacle = {
+  id: string;
+  type: string;
+  pose: {
+    x: number;
+    y: number;
+    theta: number;
+  };
+  geometry: {
+    width?: number;
+    height?: number;
+    radius?: number;
+  };
+};
+
 export type ParametersState = {
   simulation: {
     running: boolean;
@@ -32,6 +47,7 @@ export type ParametersState = {
   environment: {
     scenario: string;
   };
+  obstacles: ScenarioObstacle[];
   visualization: {
     showGrid: boolean;
     showRobot: boolean;

@@ -2,12 +2,6 @@
   "name": "Maze 1",
   "description": "Simple maze for testing path planning algorithms.",
 
-  "world": {
-    "width": 20,
-    "height": 15,
-    "unit": "m"
-  },
-
   "obstacles": [
     {
       "id": "wall_top",

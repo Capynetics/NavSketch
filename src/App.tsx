@@ -3,6 +3,7 @@ import { useState } from "react";
 import Sidebar from './components/sidebar';
 import { SimulationCanvas } from "./components/SimulationCanvas";
 import type { ParametersState } from "./types/parameters";
+import maze1Scenario from "./assets/maze1.json";
 
 function App() {
     const [parameters, setParameters] = useState<ParametersState>({
@@ -26,8 +27,8 @@ function App() {
     },
 
     goal: {
-        x: 8,
-        y: 8,
+        x: 12,
+        y: 7,
     },
 
     planner: {
@@ -44,6 +45,8 @@ function App() {
     environment: {
         scenario: "maze1",
     },
+
+    obstacles: maze1Scenario.obstacles,
 
     visualization: {
         showGrid: true,

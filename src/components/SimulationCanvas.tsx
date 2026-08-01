@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import p5 from "p5";
 import { createSketch } from "../simulation/sketch";
+import type { Simulation } from "../simulation/simulation";
 import type { ParametersState } from "../types/parameters";
 
 type SimulationCanvasProps = {
@@ -10,19 +11,27 @@ type SimulationCanvasProps = {
 export function SimulationCanvas({ parameters }: SimulationCanvasProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const instanceRef = useRef<p5 | null>(null);
+    const simulationRef = useRef<Simulation | null>(null);
 
     useEffect(() => {
         if (!containerRef.current) return;
 
-        const sketch = createSketch(containerRef.current, parameters);
+        const sketch = createSketch(containerRef.current, parameters, simulationRef);
         const instance = new p5(sketch);
         instanceRef.current = instance;
 
         return () => {
             instance.remove();
             instanceRef.current = null;
+            simulationRef.current = null;
         };
     }, []);
+
+    useEffect(() => {
+        if (!simulationRef.current) return;
+
+        simulationRef.current.updateState(parameters);
+    }, [parameters]);
 
     useEffect(() => {
         if (!instanceRef.current) return;
@@ -32,29 +41,6 @@ export function SimulationCanvas({ parameters }: SimulationCanvasProps) {
             parameters.simulation.canvasHeight
         );
     }, [parameters.simulation.canvasWidth, parameters.simulation.canvasHeight]);
-
-    useEffect(() => {
-        if (!import.meta.env.DEV) return;
-
-        const syncWorldJson = async () => {
-            try {
-                await fetch("/__world-json", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                    parameters,
-                    scenarioName: parameters.environment.scenario,
-                    }),
-                });
-            } catch (error) {
-                console.error("Failed to sync world.json", error);
-            }
-        };
-
-        void syncWorldJson();
-    }, [parameters]);
 
     return (
         <div

@@ -1,5 +1,10 @@
 import { useState, type Dispatch, type SetStateAction } from 'react';
 import type { ParametersState } from '../types/parameters';
+import maze1Scenario from '../assets/maze1.json';
+
+const scenarioObstaclesByName: Record<string, ParametersState['obstacles']> = {
+  maze1: maze1Scenario.obstacles,
+};
 
 type SidebarProps = {
   parameters: ParametersState;
@@ -349,7 +354,15 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
               <select
                 className="form-select form-select-sm"
                 value={parameters.environment.scenario}
-                onChange={(event) => updateEnvironment({ scenario: event.target.value })}
+                onChange={(event) => {
+                  const scenario = event.target.value;
+                  updateEnvironment({ scenario });
+
+                  setParameters((value) => ({
+                    ...value,
+                    obstacles: scenarioObstaclesByName[scenario] ?? [],
+                  }));
+                }}
               >
                 <option value="maze1">Maze 1</option>
                 <option value="maze2">Maze 2</option>
