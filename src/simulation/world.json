@@ -1,0 +1,192 @@
+{
+  "parameters": {
+    "simulation": {
+      "running": false,
+      "timestep": 0.016,
+      "canvasWidth": 1280,
+      "canvasHeight": 720
+    },
+    "robot": {
+      "model": "holonomic",
+      "radius": 0.25,
+      "maxLinearVelocity": 1,
+      "maxAngularVelocity": 2,
+      "initialPose": {
+        "x": 1,
+        "y": 1,
+        "theta": 0
+      }
+    },
+    "goal": {
+      "x": 8,
+      "y": 8
+    },
+    "planner": {
+      "algorithm": "bug0"
+    },
+    "lidar": {
+      "enabled": true,
+      "range": 7,
+      "resolution": 360,
+      "fieldOfView": 360
+    },
+    "environment": {
+      "scenario": "maze1"
+    },
+    "visualization": {
+      "showGrid": true,
+      "showRobot": true,
+      "showGoal": true,
+      "showObstacles": true,
+      "showTrajectory": true,
+      "showLidar": true,
+      "showRobotHeading": true,
+      "showCollisionRadius": false,
+      "showPlannerGraph": false
+    },
+    "statistics": {
+      "showSimulationTime": true,
+      "showDistanceTravelled": true
+    }
+  },
+  "scenarioName": "maze1",
+  "scenario": {
+    "name": "Maze 1",
+    "description": "Simple maze for testing path planning algorithms.",
+    "world": {
+      "width": 20,
+      "height": 15,
+      "unit": "m"
+    },
+    "obstacles": [
+      {
+        "id": "wall_top",
+        "type": "rectangle",
+        "pose": {
+          "x": 10,
+          "y": 14.75,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 20,
+          "height": 0.5
+        }
+      },
+      {
+        "id": "wall_bottom",
+        "type": "rectangle",
+        "pose": {
+          "x": 10,
+          "y": 0.25,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 20,
+          "height": 0.5
+        }
+      },
+      {
+        "id": "wall_left",
+        "type": "rectangle",
+        "pose": {
+          "x": 0.25,
+          "y": 7.5,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 0.5,
+          "height": 15
+        }
+      },
+      {
+        "id": "wall_right",
+        "type": "rectangle",
+        "pose": {
+          "x": 19.75,
+          "y": 7.5,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 0.5,
+          "height": 15
+        }
+      },
+      {
+        "id": "maze_1",
+        "type": "rectangle",
+        "pose": {
+          "x": 5,
+          "y": 11,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 1,
+          "height": 6
+        }
+      },
+      {
+        "id": "maze_2",
+        "type": "rectangle",
+        "pose": {
+          "x": 8,
+          "y": 4,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 1,
+          "height": 8
+        }
+      },
+      {
+        "id": "maze_3",
+        "type": "rectangle",
+        "pose": {
+          "x": 12,
+          "y": 10,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 5,
+          "height": 1
+        }
+      },
+      {
+        "id": "maze_4",
+        "type": "rectangle",
+        "pose": {
+          "x": 14,
+          "y": 5,
+          "theta": 0
+        },
+        "geometry": {
+          "width": 1,
+          "height": 6
+        }
+      },
+      {
+        "id": "pillar_1",
+        "type": "circle",
+        "pose": {
+          "x": 10,
+          "y": 8,
+          "theta": 0
+        },
+        "geometry": {
+          "radius": 0.8
+        }
+      },
+      {
+        "id": "pillar_2",
+        "type": "circle",
+        "pose": {
+          "x": 4,
+          "y": 5,
+          "theta": 0
+        },
+        "geometry": {
+          "radius": 1
+        }
+      }
+    ]
+  }
+}

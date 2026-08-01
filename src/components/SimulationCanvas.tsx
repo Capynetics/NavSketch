@@ -33,6 +33,29 @@ export function SimulationCanvas({ parameters }: SimulationCanvasProps) {
         );
     }, [parameters.simulation.canvasWidth, parameters.simulation.canvasHeight]);
 
+    useEffect(() => {
+        if (!import.meta.env.DEV) return;
+
+        const syncWorldJson = async () => {
+            try {
+                await fetch("/__world-json", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                    parameters,
+                    scenarioName: parameters.environment.scenario,
+                    }),
+                });
+            } catch (error) {
+                console.error("Failed to sync world.json", error);
+            }
+        };
+
+        void syncWorldJson();
+    }, [parameters]);
+
     return (
         <div
             ref={containerRef}
