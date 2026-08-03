@@ -37,8 +37,8 @@ function App() {
 
     lidar: {
         enabled: true,
-        range: 7,
-        resolution: 360,
+        range: 1,
+        resolution: 90,
         fieldOfView: 360,
     },
 

@@ -1,136 +1,512 @@
 {
-  "name": "Maze 1",
-  "description": "Simple maze for testing path planning algorithms.",
-
+  "name": "Generated Maze",
+  "description": "Generated automatically from checkbox map.",
   "obstacles": [
     {
-      "id": "wall_top",
+      "id": "cell_3_39",
       "type": "rectangle",
       "pose": {
-        "x": 10.0,
-        "y": 14.75,
-        "theta": 0.0
+        "x": 10,
+        "y": 1,
+        "theta": 0
       },
       "geometry": {
-        "width": 20.0,
+        "width": 0.5,
         "height": 0.5
       }
     },
     {
-      "id": "wall_bottom",
+      "id": "cell_4_39",
       "type": "rectangle",
       "pose": {
-        "x": 10.0,
-        "y": 0.25,
-        "theta": 0.0
+        "x": 10,
+        "y": 1.25,
+        "theta": 0
       },
       "geometry": {
-        "width": 20.0,
+        "width": 0.5,
         "height": 0.5
       }
     },
     {
-      "id": "wall_left",
+      "id": "cell_5_39",
       "type": "rectangle",
       "pose": {
-        "x": 0.25,
-        "y": 7.5,
-        "theta": 0.0
+        "x": 10,
+        "y": 1.5,
+        "theta": 0
       },
       "geometry": {
         "width": 0.5,
-        "height": 15.0
+        "height": 0.5
       }
     },
     {
-      "id": "wall_right",
+      "id": "cell_6_12",
       "type": "rectangle",
       "pose": {
-        "x": 19.75,
-        "y": 7.5,
-        "theta": 0.0
+        "x": 3.25,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
         "width": 0.5,
-        "height": 15.0
+        "height": 0.5
       }
     },
-
     {
-      "id": "maze_1",
+      "id": "cell_6_13",
       "type": "rectangle",
       "pose": {
-        "x": 5.0,
-        "y": 11.0,
-        "theta": 0.0
+        "x": 3.5,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
-        "width": 1.0,
-        "height": 6.0
+        "width": 0.5,
+        "height": 0.5
       }
     },
     {
-      "id": "maze_2",
+      "id": "cell_6_14",
       "type": "rectangle",
       "pose": {
-        "x": 8.0,
-        "y": 4.0,
-        "theta": 0.0
+        "x": 3.75,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
-        "width": 1.0,
-        "height": 8.0
+        "width": 0.5,
+        "height": 0.5
       }
     },
     {
-      "id": "maze_3",
+      "id": "cell_6_15",
       "type": "rectangle",
       "pose": {
-        "x": 12.0,
-        "y": 10.0,
-        "theta": 0.0
+        "x": 4,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
-        "width": 5.0,
-        "height": 1.0
+        "width": 0.5,
+        "height": 0.5
       }
     },
     {
-      "id": "maze_4",
+      "id": "cell_6_16",
       "type": "rectangle",
       "pose": {
-        "x": 14.0,
-        "y": 5.0,
-        "theta": 0.0
+        "x": 4.25,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
-        "width": 1.0,
-        "height": 6.0
-      }
-    },
-
-    {
-      "id": "pillar_1",
-      "type": "circle",
-      "pose": {
-        "x": 10.0,
-        "y": 8.0,
-        "theta": 0.0
-      },
-      "geometry": {
-        "radius": 0.8
+        "width": 0.5,
+        "height": 0.5
       }
     },
     {
-      "id": "pillar_2",
-      "type": "circle",
+      "id": "cell_6_17",
+      "type": "rectangle",
       "pose": {
-        "x": 4.0,
-        "y": 5.0,
-        "theta": 0.0
+        "x": 4.5,
+        "y": 1.75,
+        "theta": 0
       },
       "geometry": {
-        "radius": 1.0
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_6_39",
+      "type": "rectangle",
+      "pose": {
+        "x": 10,
+        "y": 1.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_7_39",
+      "type": "rectangle",
+      "pose": {
+        "x": 10,
+        "y": 2,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_8_39",
+      "type": "rectangle",
+      "pose": {
+        "x": 10,
+        "y": 2.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_28",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.25,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_15_29",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.5,
+        "y": 4,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_5",
+      "type": "rectangle",
+      "pose": {
+        "x": 1.5,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_6",
+      "type": "rectangle",
+      "pose": {
+        "x": 1.75,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_7",
+      "type": "rectangle",
+      "pose": {
+        "x": 2,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_8",
+      "type": "rectangle",
+      "pose": {
+        "x": 2.25,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_9",
+      "type": "rectangle",
+      "pose": {
+        "x": 2.5,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_10",
+      "type": "rectangle",
+      "pose": {
+        "x": 2.75,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_11",
+      "type": "rectangle",
+      "pose": {
+        "x": 3,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_12",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.25,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_13",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.5,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_17_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 4.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_18_32",
+      "type": "rectangle",
+      "pose": {
+        "x": 8.25,
+        "y": 4.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_33",
+      "type": "rectangle",
+      "pose": {
+        "x": 8.5,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_34",
+      "type": "rectangle",
+      "pose": {
+        "x": 8.75,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
       }
     }
   ]

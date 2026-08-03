@@ -1,16 +1,28 @@
 import type { ParametersState } from "../types/parameters";
+import { Lidar } from "./sensors/lidar";
 
 
 export class Simulation {
   current_state: ParametersState;
+  sensor_ranges: number[];
+  private lidar: Lidar;
 
   constructor(current_state: ParametersState) {
     this.current_state = current_state;
+    this.sensor_ranges = [];
+    this.lidar = new Lidar();
   }
 
   updateState(nextState: ParametersState) {
     this.current_state = nextState;
   }
+
+  sensor_read() {
+    this.sensor_ranges = this.lidar.senseEnvironment(this.current_state);
+
+    return this.sensor_ranges;
+  }
+
 
   calculate_next_step() {
     const dx = this.current_state.goal.x - this.current_state.robot.initialPose.x;
@@ -30,28 +42,4 @@ export class Simulation {
       this.current_state.robot.initialPose.y += uy * speed * dt;
     }
   }
-
-  draw(p: any) {
-    
-    p.background(220);
-
-    // Draw robot
-    p.fill(0, 0, 255);
-    p.ellipse(
-      this.current_state.robot.initialPose.x * 100,
-      this.current_state.robot.initialPose.y * 100,
-      this.current_state.robot.radius * 200,
-      this.current_state.robot.radius * 200
-    );
-
-    // Draw goal
-    p.fill(255, 0, 0);
-    p.ellipse(
-      this.current_state.goal.x * 100,
-      this.current_state.goal.y * 100,
-      20,
-      20
-    );
-   
-  } 
-}
+};
