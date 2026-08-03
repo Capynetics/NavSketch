@@ -28,13 +28,15 @@ export function createSketch(
             ).parent(parent);
             p.frameRate(60);
             p.background(220);
+            simulation.sensor_read();
             render.draw(p);
         };
 
         p.draw = () => {
             if (simulation.current_state.simulation.running) {
-                //Simulation.sense_envirement(parameters);
+                simulation.sensor_read();
                 simulation.calculate_next_step();
+                simulation.move_to_next_step();
                 render.draw(p);
             }
         };

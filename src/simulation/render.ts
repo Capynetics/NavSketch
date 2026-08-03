@@ -45,7 +45,7 @@ export class Render {
     }
 
     if (this.current_state.visualization.showLidar) {
-      const ranges = this.simulation.sensor_read();
+      const ranges = this.simulation.sensor_ranges;
       const beamCount = ranges.length;
 
       if (beamCount > 0) {
