@@ -312,6 +312,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 onChange={(event) => updatePlanner({ algorithm: event.target.value })}
               >
                 <option value="bug0">Bug0</option>
+                <option value="bug1">Bug1</option>
                 <option value="astar">A*</option>
                 <option value="dijkstra">Dijkstra</option>
               </select>

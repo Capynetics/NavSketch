@@ -11,6 +11,12 @@ export class Simulation {
   utheta: number;
   p: p5;
   private lidar: Lidar;
+  private obstacle_encountered: boolean;
+  private entrance_x: number;
+  private entrance_y: number;
+  private min_distance_to_goal: number;
+  private left_entrance: boolean;
+  private go_to_min_distance: boolean;
 
   constructor(current_state: ParametersState, p: p5) {
     this.current_state = current_state;
@@ -20,6 +26,12 @@ export class Simulation {
     this.utheta = 0;
     this.p = p;
     this.lidar = new Lidar();
+    this.obstacle_encountered = false;
+    this.entrance_x = 0;
+    this.entrance_y = 0;
+    this.min_distance_to_goal = Infinity;
+    this.left_entrance = false;
+    this.go_to_min_distance = false;
   }
 
   updateState(nextState: ParametersState) {
@@ -43,11 +55,13 @@ export class Simulation {
     let ranges = this.sensor_ranges;
     let minRange = Math.min(...ranges);
     let index = ranges.indexOf(minRange);
-    console.log(`Closest obstacle at index ${index} with range ${minRange}`);
     let angleToObstacle = (index / ranges.length) * 2 * Math.PI;
-    console.log(`Angle to closest obstacle: ${angleToObstacle} radians`);
     // Correct the angle to be relative to the robot's heading and world coordinates
-    angleToObstacle = angleToObstacle + Math.PI + this.current_state.robot.currentPose.theta + 0.01;
+    if (minRange < this.current_state.robot.radius + 0.05) {
+      angleToObstacle = angleToObstacle + Math.PI + this.current_state.robot.currentPose.theta + 0.05;
+    }else {
+      angleToObstacle = angleToObstacle + Math.PI + this.current_state.robot.currentPose.theta - 0.05;
+    } 
 
     let dx = Math.cos(angleToObstacle + Math.PI / 2);
     let dy = Math.sin(angleToObstacle + Math.PI / 2);
@@ -56,12 +70,12 @@ export class Simulation {
     this.uy = dy / distance;
     this.p.stroke(255, 0, 0);
     this.p.strokeWeight(10);
-    this.p.line(
-      this.current_state.robot.currentPose.x * 100,
-      this.current_state.robot.currentPose.y * 100,
-      this.current_state.robot.currentPose.x * 100 + Math.cos(angleToObstacle) * 100,
-      this.current_state.robot.currentPose.y * 100 + Math.sin(angleToObstacle) * 100,
-    );
+    //this.p.line(
+    //  this.current_state.robot.currentPose.x * 100,
+    //  this.current_state.robot.currentPose.y * 100,
+    //  this.current_state.robot.currentPose.x * 100 + Math.cos(angleToObstacle) * 100,
+    //  this.current_state.robot.currentPose.y * 100 + Math.sin(angleToObstacle) * 100,
+    //);
   }
 
   path_to_goal_is_clear(): boolean {
@@ -75,14 +89,14 @@ export class Simulation {
     const frontRanges = ranges.slice(startIndex, endIndex);
     const minFrontRange = Math.min(...frontRanges);
 
-    return minFrontRange >= this.current_state.robot.radius + 0.1; // Add a small buffer to avoid collisions
+    return minFrontRange >= this.current_state.robot.radius + 0.05; // Add a small buffer to avoid collisions
   }
 
   sensor_read() {
     this.sensor_ranges = this.lidar.senseEnvironment(this.current_state);
 
     return this.sensor_ranges;
-  }
+  } 
 
   calculate_next_step(p: p5) {
     this.p = p;
@@ -94,9 +108,48 @@ export class Simulation {
           this.follow_wall();
         }
         break;
-      case "astar":
-        this.ux = 0;
-        this.uy = 0;
+      case "bug1":
+        if (this.path_to_goal_is_clear() && !this.obstacle_encountered) {
+          this.move_towards_goal();
+        } else {
+          if (!this.obstacle_encountered) {
+            this.entrance_x = this.current_state.robot.currentPose.x;
+            this.entrance_y = this.current_state.robot.currentPose.y;
+            this.obstacle_encountered = true;
+          }
+
+          let current_distance_to_goal = Math.sqrt(
+            Math.pow(this.current_state.robot.currentPose.x - this.current_state.goal.x, 2) +
+            Math.pow(this.current_state.robot.currentPose.y - this.current_state.goal.y, 2)
+          );
+          if (current_distance_to_goal < this.min_distance_to_goal) {
+            this.min_distance_to_goal = current_distance_to_goal;
+          }
+
+          let current_distance_to_entrance = Math.sqrt(
+            Math.pow(this.current_state.robot.currentPose.x - this.entrance_x, 2) +
+            Math.pow(this.current_state.robot.currentPose.y - this.entrance_y, 2)
+          );
+          if (current_distance_to_entrance > 0.5) {
+            this.left_entrance = true;
+          }
+
+          if (this.left_entrance && current_distance_to_entrance < 0.1) {
+            this.go_to_min_distance = true;
+          }
+          console.log(this.go_to_min_distance);
+
+          if (this.go_to_min_distance && current_distance_to_goal <= this.min_distance_to_goal + 0.1) {
+            this.obstacle_encountered = false;
+            this.left_entrance = false;
+            this.go_to_min_distance = false;
+            this.min_distance_to_goal = Infinity;
+            this.move_towards_goal();
+            break;
+          }
+          this.follow_wall();
+
+        }
         break;
       case "dijkstra":
         this.ux = 0;
@@ -113,7 +166,7 @@ export class Simulation {
     const dx = this.current_state.goal.x - this.current_state.robot.currentPose.x;
     const dy = this.current_state.goal.y - this.current_state.robot.currentPose.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    const speed = 1; // m/s
+    const speed = 2; // m/s
     const phi = 1; // rad/s
 
     const dt = this.current_state.simulation.timestep;

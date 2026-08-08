@@ -4,6 +4,7 @@ import Sidebar from './components/sidebar';
 import { SimulationCanvas } from "./components/SimulationCanvas";
 import type { ParametersState } from "./types/parameters";
 import bugTrapScenario from "./assets/bug_trap.json";
+import maze1Scenario from './assets/maze1.json'; 
 
 function App() {
     const [parameters, setParameters] = useState<ParametersState>({
@@ -27,12 +28,12 @@ function App() {
     },
 
     goal: {
-        x: 6.7,
+        x: 12,
         y: 2.5,
     },
 
     planner: {
-        algorithm: "bug0",
+        algorithm: "bug1",
     },
 
     lidar: {
@@ -43,10 +44,10 @@ function App() {
     },
 
     environment: {
-        scenario: "bug_trap",
+        scenario: "maze1", // maze1 | bug_trap | custom
     },
 
-    obstacles: bugTrapScenario.obstacles,
+    obstacles: maze1Scenario.obstacles, //
 
     visualization: {
         showGrid: true,
