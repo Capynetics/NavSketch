@@ -8,6 +8,7 @@ export class Simulation {
   sensor_ranges: number[];
   ux: number;
   uy: number;
+  utheta: number;
   p: p5;
   private lidar: Lidar;
 
@@ -16,6 +17,7 @@ export class Simulation {
     this.sensor_ranges = [];
     this.ux = 0;
     this.uy = 0;
+    this.utheta = 0;
     this.p = p;
     this.lidar = new Lidar();
   }
@@ -45,7 +47,7 @@ export class Simulation {
     let angleToObstacle = (index / ranges.length) * 2 * Math.PI;
     console.log(`Angle to closest obstacle: ${angleToObstacle} radians`);
     // Correct the angle to be relative to the robot's heading and world coordinates
-    angleToObstacle = angleToObstacle + Math.PI + this.current_state.robot.currentPose.theta + 0.1;
+    angleToObstacle = angleToObstacle + Math.PI + this.current_state.robot.currentPose.theta + 0.01;
 
     let dx = Math.cos(angleToObstacle + Math.PI / 2);
     let dy = Math.sin(angleToObstacle + Math.PI / 2);
@@ -68,12 +70,12 @@ export class Simulation {
       return true;
     }
 
-    const startIndex = Math.max(0, Math.floor(ranges.length * 0.25));
-    const endIndex = Math.max(startIndex + 1, Math.floor(ranges.length * 0.75));
+    const startIndex = Math.max(0, Math.floor(ranges.length * 0));
+    const endIndex = Math.max(startIndex + 1, Math.floor(ranges.length * 1));
     const frontRanges = ranges.slice(startIndex, endIndex);
     const minFrontRange = Math.min(...frontRanges);
 
-    return minFrontRange >= this.current_state.robot.radius + 0.25;
+    return minFrontRange >= this.current_state.robot.radius + 0.1; // Add a small buffer to avoid collisions
   }
 
   sensor_read() {
@@ -111,22 +113,17 @@ export class Simulation {
     const dx = this.current_state.goal.x - this.current_state.robot.currentPose.x;
     const dy = this.current_state.goal.y - this.current_state.robot.currentPose.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    const speed = 2; // m/s
+    const speed = 1; // m/s
+    const phi = 1; // rad/s
 
     const dt = this.current_state.simulation.timestep;
     if (distance < speed * dt) {
       this.current_state.robot.currentPose.x = this.current_state.goal.x;
       this.current_state.robot.currentPose.y = this.current_state.goal.y;
-      if (this.ux !== 0 || this.uy !== 0) {
-        this.current_state.robot.currentPose.theta = Math.atan2(this.uy, this.ux);
-      }
-      this.current_state.simulation.running = false;
-    }else{
+    } else {
       this.current_state.robot.currentPose.x += this.ux * speed * dt;
       this.current_state.robot.currentPose.y += this.uy * speed * dt;
-      if (this.ux !== 0 || this.uy !== 0) {
-        this.current_state.robot.currentPose.theta = Math.atan2(this.uy, this.ux);
-      }
+      this.current_state.robot.currentPose.theta += this.utheta * phi * dt;
     }
   }
 };
