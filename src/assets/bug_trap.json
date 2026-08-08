@@ -1,0 +1,1722 @@
+{
+  "name": "bug_trap",
+  "description": "this map is a trap to bug zero",
+  "obstacles": [
+    {
+      "id": "cell_4_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_16",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.25,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_17",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.5,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_18",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.75,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_19",
+      "type": "rectangle",
+      "pose": {
+        "x": 5,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_20",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.25,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_28",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.25,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_29",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.5,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_4_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 1.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_16",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.25,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_17",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.5,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_18",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.75,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_19",
+      "type": "rectangle",
+      "pose": {
+        "x": 5,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_20",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.25,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_28",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.25,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_29",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.5,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_5_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 1.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_6_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 1.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_6_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 1.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_6_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 1.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_6_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 1.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_7_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 2,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_7_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 2,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_7_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 2,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_7_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 2,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_8_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 2.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_8_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 2.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_8_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 2.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_8_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 2.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_9_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 2.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_9_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 2.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_9_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 2.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_9_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 2.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_10_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 2.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_11_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 3,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_12_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 3.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_28",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.25,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_29",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.5,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_13_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 3.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_28",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.25,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_29",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.5,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_30",
+      "type": "rectangle",
+      "pose": {
+        "x": 7.75,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_14_31",
+      "type": "rectangle",
+      "pose": {
+        "x": 8,
+        "y": 3.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_15_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 4,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_15_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 4,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_16_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 4.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_17_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 4.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_17_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 4.5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_18_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 4.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_18_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 4.75,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_16",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.25,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_17",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.5,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_18",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.75,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_19",
+      "type": "rectangle",
+      "pose": {
+        "x": 5,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_20",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.25,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_19_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 5,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_14",
+      "type": "rectangle",
+      "pose": {
+        "x": 3.75,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_15",
+      "type": "rectangle",
+      "pose": {
+        "x": 4,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_16",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.25,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_17",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.5,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_18",
+      "type": "rectangle",
+      "pose": {
+        "x": 4.75,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_19",
+      "type": "rectangle",
+      "pose": {
+        "x": 5,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_20",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.25,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_21",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.5,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_22",
+      "type": "rectangle",
+      "pose": {
+        "x": 5.75,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_23",
+      "type": "rectangle",
+      "pose": {
+        "x": 6,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_24",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.25,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_25",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.5,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_26",
+      "type": "rectangle",
+      "pose": {
+        "x": 6.75,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    },
+    {
+      "id": "cell_20_27",
+      "type": "rectangle",
+      "pose": {
+        "x": 7,
+        "y": 5.25,
+        "theta": 0
+      },
+      "geometry": {
+        "width": 0.5,
+        "height": 0.5
+      }
+    }
+  ]
+}

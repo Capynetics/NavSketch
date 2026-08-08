@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from './components/sidebar';
 import { SimulationCanvas } from "./components/SimulationCanvas";
 import type { ParametersState } from "./types/parameters";
-import maze1Scenario from "./assets/maze1.json";
+import bugTrapScenario from "./assets/bug_trap.json";
 
 function App() {
     const [parameters, setParameters] = useState<ParametersState>({
@@ -20,15 +20,15 @@ function App() {
         maxLinearVelocity: 1.0,
         maxAngularVelocity: 2.0,
         currentPose: {
-            x: 12,
+            x: 1,
             y: 1,
             theta: 0,
         },
     },
 
     goal: {
-        x: 1,
-        y: 7,
+        x: 6.7,
+        y: 2.5,
     },
 
     planner: {
@@ -43,10 +43,10 @@ function App() {
     },
 
     environment: {
-        scenario: "maze1",
+        scenario: "bug_trap",
     },
 
-    obstacles: maze1Scenario.obstacles,
+    obstacles: bugTrapScenario.obstacles,
 
     visualization: {
         showGrid: true,

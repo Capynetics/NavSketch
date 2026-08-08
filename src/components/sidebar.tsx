@@ -1,9 +1,11 @@
 import { useState, type Dispatch, type SetStateAction } from 'react';
 import type { ParametersState } from '../types/parameters';
 import maze1Scenario from '../assets/maze1.json';
+import bugTrapScenario from '../assets/bug_trap.json';
 
 const scenarioObstaclesByName: Record<string, ParametersState['obstacles']> = {
   maze1: maze1Scenario.obstacles,
+  bug_trap: bugTrapScenario.obstacles,
 };
 
 type SidebarProps = {
@@ -366,6 +368,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
               >
                 <option value="maze1">Maze 1</option>
                 <option value="maze2">Maze 2</option>
+                <option value="bug_trap">Bug Trap</option>
                 <option value="open">Open</option>
               </select>
             </div>
