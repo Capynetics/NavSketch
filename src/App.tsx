@@ -19,7 +19,7 @@ function App() {
         radius: 0.25,
         maxLinearVelocity: 1.0,
         maxAngularVelocity: 2.0,
-        initialPose: {
+        currentPose: {
             x: 1,
             y: 1,
             theta: 0,
@@ -38,7 +38,7 @@ function App() {
     lidar: {
         enabled: true,
         range: 1,
-        resolution: 90,
+        resolution: 36,
         fieldOfView: 360,
     },
 

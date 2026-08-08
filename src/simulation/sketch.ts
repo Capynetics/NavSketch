@@ -16,7 +16,7 @@ export function createSketch(
 
     return (p: p5) => {
         
-        const simulation = new Simulation(parameters);
+        const simulation = new Simulation(parameters, p);
         simulationRef.current = simulation;
 
         const render = new Render(simulation);
@@ -34,10 +34,12 @@ export function createSketch(
 
         p.draw = () => {
             if (simulation.current_state.simulation.running) {
+                p.background(220);
                 simulation.sensor_read();
-                simulation.calculate_next_step();
+                simulation.calculate_next_step(p);
                 simulation.move_to_next_step();
                 render.draw(p);
+                
             }
         };
 

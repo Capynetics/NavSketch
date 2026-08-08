@@ -11,12 +11,13 @@ export class Lidar {
     const maxRange = Math.max(0, lidar.range);
     const fovRad = (lidar.fieldOfView * Math.PI) / 180;
 
-    const rx = state.robot.initialPose.x;
-    const ry = state.robot.initialPose.y;
-    const heading = state.robot.initialPose.theta;
+    const rx = state.robot.currentPose.x;
+    const ry = state.robot.currentPose.y;
+    const heading = state.robot.currentPose.theta;
 
     const startAngle = heading - fovRad / 2;
-    const step = beamCount > 1 ? fovRad / (beamCount - 1) : 0;
+    const isFullCircle = Math.abs(fovRad) >= 2 * Math.PI;
+    const step = beamCount > 1 ? fovRad / (isFullCircle ? beamCount : beamCount - 1) : 0;
 
     const ranges: number[] = [];
     for (let i = 0; i < beamCount; i += 1) {

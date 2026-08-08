@@ -19,7 +19,7 @@ export class Render {
 
   draw(p: any) {
     
-    p.background(220);
+    //p.background(220);
 
     // Draw obstacles
     p.fill(0, 0, 0);
@@ -50,12 +50,13 @@ export class Render {
 
       if (beamCount > 0) {
         const lidar = this.current_state.lidar;
-        const robotX = this.current_state.robot.initialPose.x * 100;
-        const robotY = this.current_state.robot.initialPose.y * 100;
-        const heading = this.current_state.robot.initialPose.theta;
+        const robotX = this.current_state.robot.currentPose.x * 100;
+        const robotY = this.current_state.robot.currentPose.y * 100;
+        const heading = this.current_state.robot.currentPose.theta;
         const fovRad = (lidar.fieldOfView * Math.PI) / 180;
         const startAngle = heading - fovRad / 2;
-        const step = beamCount > 1 ? fovRad / (beamCount - 1) : 0;
+        const isFullCircle = Math.abs(fovRad) >= 2 * Math.PI;
+        const step = beamCount > 1 ? fovRad / (isFullCircle ? beamCount : beamCount - 1) : 0;
 
         p.stroke(255, 0, 0, 140);
         p.strokeWeight(1);
@@ -76,25 +77,27 @@ export class Render {
     // Draw robot
     p.fill(0, 0, 255);
     p.ellipse(
-      this.current_state.robot.initialPose.x * 100,
-      this.current_state.robot.initialPose.y * 100,
+      this.current_state.robot.currentPose.x * 100,
+      this.current_state.robot.currentPose.y * 100,
       this.current_state.robot.radius * 200,
       this.current_state.robot.radius * 200
     );
 
     // Draw robot heading line from center to edge.
-    const robotX = this.current_state.robot.initialPose.x * 100;
-    const robotY = this.current_state.robot.initialPose.y * 100;
-    const robotTheta = this.current_state.robot.initialPose.theta;
+    const robotX = this.current_state.robot.currentPose.x * 100;
+    const robotY = this.current_state.robot.currentPose.y * 100;
+    const robotTheta = this.current_state.robot.currentPose.theta;
     const headingLength = this.current_state.robot.radius * 100;
-    p.stroke(0, 0, 180);
-    p.strokeWeight(2);
-    p.line(
-      robotX,
-      robotY,
-      robotX + Math.cos(robotTheta) * headingLength,
-      robotY + Math.sin(robotTheta) * headingLength
-    );
+    if (Number.isFinite(robotX) && Number.isFinite(robotY) && Number.isFinite(robotTheta)) {
+      p.stroke(0, 0, 180);
+      p.strokeWeight(2);
+      p.line(
+        robotX,
+        robotY,
+        robotX + Math.cos(robotTheta) * headingLength,
+        robotY + Math.sin(robotTheta) * headingLength
+      );
+    }
     p.noStroke();
 
     // Draw goal

@@ -46,13 +46,13 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
     }));
   };
 
-  const updatePose = (patch: Partial<ParametersState['robot']['initialPose']>) => {
+  const updateCurrentPose = (patch: Partial<ParametersState['robot']['currentPose']>) => {
     setParameters((value) => ({
       ...value,
       robot: {
         ...value.robot,
-        initialPose: {
-          ...value.robot.initialPose,
+        currentPose: {
+          ...value.robot.currentPose,
           ...patch,
         },
       },
@@ -201,15 +201,15 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
               </div>
             </div>
 
-            <div className="mb-2 small text-secondary">Initial Pose</div>
+            <div className="mb-2 small text-secondary">Current Pose</div>
             <div className="row g-2 mb-2">
               <div className="col-4">
                 <label className="form-label small text-secondary">X</label>
                 <input
                   type="number"
                   className="form-control form-control-sm"
-                  value={parameters.robot.initialPose.x}
-                  onChange={(event) => updatePose({ x: Number(event.target.value) })}
+                  value={parameters.robot.currentPose.x}
+                  onChange={(event) => updateCurrentPose({ x: Number(event.target.value) })}
                 />
               </div>
               <div className="col-4">
@@ -217,8 +217,8 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 <input
                   type="number"
                   className="form-control form-control-sm"
-                  value={parameters.robot.initialPose.y}
-                  onChange={(event) => updatePose({ y: Number(event.target.value) })}
+                  value={parameters.robot.currentPose.y}
+                  onChange={(event) => updateCurrentPose({ y: Number(event.target.value) })}
                 />
               </div>
               <div className="col-4">
@@ -226,8 +226,8 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 <input
                   type="number"
                   className="form-control form-control-sm"
-                  value={parameters.robot.initialPose.theta}
-                  onChange={(event) => updatePose({ theta: Number(event.target.value) })}
+                  value={parameters.robot.currentPose.theta}
+                  onChange={(event) => updateCurrentPose({ theta: Number(event.target.value) })}
                 />
               </div>
             </div>

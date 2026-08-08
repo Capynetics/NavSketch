@@ -25,7 +25,7 @@ export type ParametersState = {
     radius: number;
     maxLinearVelocity: number;
     maxAngularVelocity: number;
-    initialPose: {
+    currentPose: {
       x: number;
       y: number;
       theta: number;
