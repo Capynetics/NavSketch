@@ -17,6 +17,8 @@ export class Simulation {
   private min_distance_to_goal: number;
   private left_entrance: boolean;
   private go_to_min_distance: boolean;
+  is_following_wall: boolean;
+  min_distance_to_goal_point: { x: number; y: number };
 
   constructor(current_state: ParametersState, p: p5) {
     this.current_state = current_state;
@@ -32,6 +34,8 @@ export class Simulation {
     this.min_distance_to_goal = Infinity;
     this.left_entrance = false;
     this.go_to_min_distance = false;
+    this.is_following_wall = false;
+    this.min_distance_to_goal_point = { x: 0, y: 0 };
   }
 
   updateState(nextState: ParametersState) {
@@ -49,9 +53,11 @@ export class Simulation {
       }
         this.ux = dx / distance;
         this.uy = dy / distance;
+        this.is_following_wall = false;
   }
 
   follow_wall() {
+    this.is_following_wall = true;
     let ranges = this.sensor_ranges;
     let minRange = Math.min(...ranges);
     let index = ranges.indexOf(minRange);
@@ -125,6 +131,10 @@ export class Simulation {
 
           if (current_distance_to_goal < this.min_distance_to_goal) {
             this.min_distance_to_goal = current_distance_to_goal;
+            this.min_distance_to_goal_point = {
+              x: this.current_state.robot.currentPose.x,
+              y: this.current_state.robot.currentPose.y,
+            };
           }
 
           let current_distance_to_entrance = Math.sqrt(
