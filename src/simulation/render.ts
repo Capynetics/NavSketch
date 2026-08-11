@@ -110,7 +110,7 @@ export class Render {
     );
 
     // Mark the closest point to goal reached while following a wall
-    if (this.simulation.is_following_wall) {
+    if (this.simulation.is_bug1_following_wall) {
       p.fill(0, 200, 0);
       p.ellipse(
         this.simulation.min_distance_to_goal_point.x * 100,
