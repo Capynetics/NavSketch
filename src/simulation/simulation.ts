@@ -122,6 +122,7 @@ export class Simulation {
             Math.pow(this.current_state.robot.currentPose.x - this.current_state.goal.x, 2) +
             Math.pow(this.current_state.robot.currentPose.y - this.current_state.goal.y, 2)
           );
+
           if (current_distance_to_goal < this.min_distance_to_goal) {
             this.min_distance_to_goal = current_distance_to_goal;
           }
@@ -137,9 +138,8 @@ export class Simulation {
           if (this.left_entrance && current_distance_to_entrance < 0.1) {
             this.go_to_min_distance = true;
           }
-          console.log(this.go_to_min_distance);
 
-          if (this.go_to_min_distance && current_distance_to_goal <= this.min_distance_to_goal + 0.1) {
+          if (this.go_to_min_distance && current_distance_to_goal <= this.min_distance_to_goal + 0.02) {
             this.obstacle_encountered = false;
             this.left_entrance = false;
             this.go_to_min_distance = false;
