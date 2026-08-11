@@ -85,7 +85,7 @@ function App() {
                     alignItems: "center",
                 }}
             >
-                <SimulationCanvas parameters={parameters} />
+                <SimulationCanvas parameters={parameters} setParameters={setParameters} />
             </div>
             <Sidebar
                 parameters={parameters}
