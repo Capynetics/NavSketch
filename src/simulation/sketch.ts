@@ -47,10 +47,12 @@ export function createSketch(
 
         p.draw = () => {
             p.background(220);
-            simulation.sensor_read();
             if (simulation.current_state.simulation.running) {
+                // ------ Main simulation loop -----
+                simulation.sensor_read();
                 simulation.calculate_next_step(p);
                 simulation.move_to_next_step();
+                // -----------------------------------
             }
             render.draw(p);
         };

@@ -3,7 +3,6 @@ import { useState } from "react";
 import Sidebar from './components/sidebar';
 import { SimulationCanvas } from "./components/SimulationCanvas";
 import type { ParametersState } from "./types/parameters";
-import bugTrapScenario from "./assets/bug_trap.json";
 import maze1Scenario from './assets/maze1.json'; 
 
 function App() {
@@ -39,7 +38,7 @@ function App() {
     lidar: {
         enabled: true,
         range: 1,
-        resolution: 36,
+        resolution: 90,
         fieldOfView: 360,
     },
 

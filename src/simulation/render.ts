@@ -120,5 +120,18 @@ export class Render {
       );
     }
 
+    // Draw the Bug 2 m-line from the saved start point to the goal.
+    if (this.current_state.planner.algorithm === "bug2" && this.simulation.is_bug2_started) {
+      p.stroke(0, 170, 0);
+      p.strokeWeight(2);
+      p.line(
+        this.simulation.m_line_x * 100,
+        this.simulation.m_line_y * 100,
+        this.current_state.goal.x * 100,
+        this.current_state.goal.y * 100
+      );
+      p.noStroke();
+    }
+
   } 
 }

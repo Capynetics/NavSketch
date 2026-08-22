@@ -313,8 +313,11 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
               >
                 <option value="bug0">Bug0</option>
                 <option value="bug1">Bug1</option>
-                <option value="astar">A*</option>
-                <option value="dijkstra">Dijkstra</option>
+                <option value="bug2">Bug2</option>
+                <option value="tangentBug">Tangent Bug</option>
+                <option value="potentialField">Potential Field</option>
+                <option value="PRM">PRM</option>
+                <option value="RRT">RRT</option>
               </select>
             </div>
 
