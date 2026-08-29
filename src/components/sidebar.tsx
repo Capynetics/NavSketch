@@ -99,7 +99,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
 
   return (
     <aside
-      className="bg-dark text-white p-3 d-flex flex-column gap-3"
+      className="control-sidebar bg-dark text-white p-3 d-flex flex-column gap-3"
       style={{
         position: 'absolute',
         top: 0,
@@ -116,7 +116,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
       }}
     >
       <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center' : 'justify-content-between'}`}>
-        {!collapsed && <span className="fw-semibold small text-uppercase text-secondary">Controls</span>}
+        {!collapsed && <span className="fw-semibold small text-uppercase text-secondary">Parameters</span>}
         <button
           type="button"
           className="btn btn-outline-light btn-sm flex-shrink-0"

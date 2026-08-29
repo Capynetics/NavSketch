@@ -66,6 +66,7 @@ export function SimulationCanvas({ parameters, setParameters }: SimulationCanvas
     return (
         <div
             ref={containerRef}
+            className="simulation-canvas"
             style={{
                 width: `${parameters.simulation.canvasWidth}px`,
                 height: `${parameters.simulation.canvasHeight}px`,

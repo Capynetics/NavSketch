@@ -67,25 +67,42 @@ function App() {
   });
 
   return (
-        <div
-            style={{
-                position: "relative",
-                minHeight: "100vh",
-                width: "100%",
-                overflow: "hidden",
-            }}
-        >
-            <div
-                style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <SimulationCanvas parameters={parameters} setParameters={setParameters} />
-            </div>
+        <div className="app-shell">
+            <header className="workspace-header">
+                <div className="brand-lockup">
+                    <div className="brand-mark"><i className="bi bi-bezier2" /></div>
+                    <div>
+                        <div className="brand-name">NavSketch</div>
+                        <div className="brand-context">Motion planning laboratory</div>
+                    </div>
+                </div>
+                <div className="workspace-status">
+                    <span className={`status-dot ${parameters.simulation.running ? 'is-running' : ''}`} />
+                    {parameters.simulation.running ? 'Simulation running' : 'Ready to simulate'}
+                </div>
+            </header>
+            <main className="simulation-workspace">
+                <div className="canvas-panel">
+                    <div className="canvas-panel-header">
+                        <div>
+                            <div className="eyebrow">Workspace</div>
+                            <h1>{parameters.environment.scenario.replaceAll('_', ' ')}</h1>
+                        </div>
+                        <div className="canvas-legend" aria-label="Simulation legend">
+                            <span><i className="legend-swatch robot-swatch" /> Robot</span>
+                            <span><i className="legend-swatch goal-swatch" /> Goal</span>
+                            <span><i className="legend-swatch lidar-swatch" /> LiDAR</span>
+                        </div>
+                    </div>
+                    <div className="canvas-viewport">
+                        <SimulationCanvas parameters={parameters} setParameters={setParameters} />
+                    </div>
+                    <footer className="canvas-panel-footer">
+                        <span><i className="bi bi-cursor-fill" /> Drag robot and goal to reposition</span>
+                        <span>{parameters.planner.algorithm} planner</span>
+                    </footer>
+                </div>
+            </main>
             <Sidebar
                 parameters={parameters}
                 setParameters={setParameters}
