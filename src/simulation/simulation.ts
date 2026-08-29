@@ -1,14 +1,13 @@
-import type p5 from "p5";
 import type { ParametersState, ScenarioObstacle } from "../types/parameters";
 import { Lidar } from "./sensors/lidar";
 
-type RoadmapPoint = { x: number; y: number };
-type RoadmapEdge = { start: number; end: number };
-type Roadmap = { points: RoadmapPoint[]; edges: RoadmapEdge[] };
-type RrtNode = RoadmapPoint & { parent: number | null };
+export type RoadmapPoint = { x: number; y: number };
+export type RoadmapEdge = { start: number; end: number };
+export type Roadmap = { points: RoadmapPoint[]; edges: RoadmapEdge[] };
+export type RrtNode = RoadmapPoint & { parent: number | null };
 type RrtPhase = "growing" | "moving" | "failed";
 type WavefrontPhase = "propagating" | "moving" | "failed";
-type WavefrontGrid = {
+export type WavefrontGrid = {
   cellSize: number;
   columns: number;
   rows: number;
@@ -22,7 +21,7 @@ type WavefrontGrid = {
   goalPosition: RoadmapPoint;
 };
 type PrmPhase = "sampling" | "connecting" | "searching" | "moving";
-type RoadmapSearch = {
+export type RoadmapSearch = {
   points: RoadmapPoint[];
   neighbors: number[][];
   startIndex: number;
@@ -40,7 +39,6 @@ export class Simulation {
   ux: number;
   uy: number;
   utheta: number;
-  p: p5;
   private lidar: Lidar;
   private obstacle_encountered: boolean;
   private entrance_x: number;
@@ -73,18 +71,18 @@ export class Simulation {
   private wavefrontWaypointIndex: number = 0;
   private wavefrontPhase: WavefrontPhase = "propagating";
   private wavefrontNeedsToBeBuilt: boolean = true;
+  private potentialFieldForces: { attractiveX: number; attractiveY: number; repulsiveX: number; repulsiveY: number } | null = null;
 
   get is_bug2_started(): boolean {
     return this.bug2_started;
   }
 
-  constructor(current_state: ParametersState, p: p5) {
+  constructor(current_state: ParametersState) {
     this.current_state = current_state;
     this.sensor_ranges = [];
     this.ux = 0;
     this.uy = 0;
     this.utheta = 0;
-    this.p = p;
     this.lidar = new Lidar();
     this.obstacle_encountered = false;
     this.entrance_x = 0;
@@ -105,6 +103,21 @@ export class Simulation {
 
   updateState(nextState: ParametersState) {
     this.current_state = nextState;
+  }
+
+  get plannerRenderData() {
+    return {
+      roadmap: this.roadmap,
+      prmPath: this.prmPath.slice(this.prmWaypointIndex),
+      prmSearch: this.prmSearch,
+      rrtNodes: this.rrtNodes,
+      rrtPath: this.rrtPath,
+      rrtWaypointIndex: this.rrtWaypointIndex,
+      wavefrontGrid: this.wavefrontGrid,
+      wavefrontPath: this.wavefrontPath,
+      wavefrontWaypointIndex: this.wavefrontWaypointIndex,
+      potentialFieldForces: this.potentialFieldForces,
+    };
   }
 
   move_towards_goal() {
@@ -156,14 +169,6 @@ export class Simulation {
     let distance = Math.sqrt(dx * dx + dy * dy);
     this.ux = dx / distance;
     this.uy = dy / distance;
-    this.p.stroke(255, 0, 0);
-    this.p.strokeWeight(10);
-    //this.p.line(
-    //  this.current_state.robot.currentPose.x * 100,
-    //  this.current_state.robot.currentPose.y * 100,
-    //  this.current_state.robot.currentPose.x * 100 + Math.cos(angleToObstacle) * 100,
-    //  this.current_state.robot.currentPose.y * 100 + Math.sin(angleToObstacle) * 100,
-    //);
   }
 
   path_to_goal_is_clear(): boolean {
@@ -345,95 +350,6 @@ export class Simulation {
     );
 
     return distanceToDiscontinuity + distanceToGoal;
-  }
-
-  private drawDiscontinuities() {
-    const discontinuities = this.get_discontinuities(this.sensor_ranges);
-    const beamCount = this.sensor_ranges.length;
-    if (beamCount === 0) {
-      return;
-    }
-
-    const fieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
-    const startAngle = this.current_state.robot.currentPose.theta - fieldOfView / 2;
-    const step = beamCount > 1 ? fieldOfView / (beamCount - 1) : 0;
-
-    this.p.stroke(0, 255, 0);
-    this.p.strokeWeight(10);
-    for (const index of discontinuities) {
-      if (index + 1 >= this.sensor_ranges.length) {
-        continue;
-      }
-      const angle = startAngle + index * step;
-      const range = Math.min(this.sensor_ranges[index], this.sensor_ranges[index + 1]);
-      const x = this.current_state.robot.currentPose.x + range * Math.cos(angle);
-      const y = this.current_state.robot.currentPose.y + range * Math.sin(angle);
-      this.p.point(x * 100, y * 100);
-    }
-
-  }
-
-  private drawDiscontinuityLines() {
-    const discontinuity_lines = this.get_discontinuity_lines();
-    const beamCount = this.sensor_ranges.length;
-    if (beamCount === 0 || discontinuity_lines.length === 0) {
-      return;
-    }
-
-    const fieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
-    const startAngle = this.current_state.robot.currentPose.theta - fieldOfView / 2;
-    const step = beamCount > 1 ? fieldOfView / (beamCount - 1) : 0;
-
-    this.p.stroke(255, 165, 0); // Orange color
-    this.p.strokeWeight(6);
-    for (const line of discontinuity_lines) {
-      const startIdx = line.start;
-      const endIdx = line.end;
-
-      // Calculate start point coordinates
-      if (startIdx + 1 >= this.sensor_ranges.length) {
-        continue;
-      }
-      const startAngleBeam = startAngle + startIdx * step;
-      const startRange = Math.min(this.sensor_ranges[startIdx], this.sensor_ranges[startIdx + 1]);
-      const startX = this.current_state.robot.currentPose.x + startRange * Math.cos(startAngleBeam);
-      const startY = this.current_state.robot.currentPose.y + startRange * Math.sin(startAngleBeam);
-
-      // Calculate end point coordinates
-      if (endIdx + 1 >= this.sensor_ranges.length) {
-        continue;
-      }
-      const endAngleBeam = startAngle + endIdx * step;
-      const endRange = Math.min(this.sensor_ranges[endIdx], this.sensor_ranges[endIdx + 1]);
-      const endX = this.current_state.robot.currentPose.x + endRange * Math.cos(endAngleBeam);
-      const endY = this.current_state.robot.currentPose.y + endRange * Math.sin(endAngleBeam);
-
-      // Draw line
-      this.p.line(startX * 100, startY * 100, endX * 100, endY * 100);
-    }
-  }
-
-  private drawForceVector(x: number, y: number, r: number, g: number, b: number, scale = 0.5) {
-    const originX = this.current_state.robot.currentPose.x;
-    const originY = this.current_state.robot.currentPose.y;
-    this.p.stroke(r, g, b);
-    this.p.strokeWeight(4);
-    this.p.line(
-      originX * 100,
-      originY * 100,
-      (originX + x * scale) * 100,
-      (originY + y * scale) * 100
-    );
-  }
-
-  private drawPotentialFieldVectors(
-    attractiveX: number,
-    attractiveY: number,
-    repulsiveX: number,
-    repulsiveY: number
-  ) {
-    this.drawForceVector(attractiveX, attractiveY, 0, 0, 255); // blue = attractive
-    this.drawForceVector(repulsiveX, repulsiveY, 255, 0, 255); // magenta = repulsive
   }
 
   pointToLineDistance(
@@ -834,30 +750,6 @@ export class Simulation {
     return path;
   }
 
-  private drawRrt() {
-    if (!this.current_state.visualization.showPlannerGraph) {
-      return;
-    }
-
-    this.p.stroke(70, 120, 180);
-    this.p.strokeWeight(1);
-    for (const node of this.rrtNodes) {
-      if (node.parent === null) {
-        continue;
-      }
-      const parent = this.rrtNodes[node.parent];
-      this.p.line(parent.x * 100, parent.y * 100, node.x * 100, node.y * 100);
-    }
-    this.p.stroke(0, 180, 0);
-    this.p.strokeWeight(3);
-    for (let index = this.rrtWaypointIndex; index < this.rrtPath.length - 1; index += 1) {
-      const start = this.rrtPath[index];
-      const end = this.rrtPath[index + 1];
-      this.p.line(start.x * 100, start.y * 100, end.x * 100, end.y * 100);
-    }
-    this.p.noStroke();
-  }
-
   private initializeWavefront(): boolean {
     const cellSize = 0.2;
     const columns = Math.ceil(this.current_state.simulation.canvasWidth / (cellSize * 100));
@@ -981,100 +873,7 @@ export class Simulation {
     return path;
   }
 
-  private drawWavefront() {
-    const grid = this.wavefrontGrid;
-    if (!grid || !this.current_state.visualization.showPlannerGraph) {
-      return;
-    }
-
-    this.p.noStroke();
-    this.p.fill(0, 150, 255, 45);
-    this.p.textAlign(this.p.CENTER, this.p.CENTER);
-    this.p.textSize(12);
-    for (let index = 0; index < grid.distances.length; index += 1) {
-      if (grid.distances[index] < 0) {
-        continue;
-      }
-      const column = index % grid.columns;
-      const row = Math.floor(index / grid.columns);
-      this.p.rect(
-        column * grid.cellSize * 100,
-        row * grid.cellSize * 100,
-        grid.cellSize * 100,
-        grid.cellSize * 100
-      );
-      this.p.fill(0);
-      this.p.text(
-        grid.distances[index],
-        (column + 0.5) * grid.cellSize * 100,
-        (row + 0.5) * grid.cellSize * 100
-      );
-      this.p.fill(0, 150, 255, 45);
-    }
-    this.p.stroke(0, 180, 0);
-    this.p.strokeWeight(3);
-    for (let index = this.wavefrontWaypointIndex; index < this.wavefrontPath.length - 1; index += 1) {
-      const start = this.wavefrontPath[index];
-      const end = this.wavefrontPath[index + 1];
-      this.p.line(start.x * 100, start.y * 100, end.x * 100, end.y * 100);
-    }
-    this.p.noStroke();
-  }
-
-  drawRoadMap(
-    points: RoadmapPoint[],
-    edges: RoadmapEdge[],
-    path: RoadmapPoint[],
-    search: RoadmapSearch | null
-  ) {
-    if (!this.current_state.visualization.showPlannerGraph) {
-      return;
-    }
-
-    this.p.stroke(80, 80, 80);
-    this.p.strokeWeight(1);
-    for (const edge of edges) {
-      const start = points[edge.start];
-      const end = points[edge.end];
-      this.p.line(start.x * 100, start.y * 100, end.x * 100, end.y * 100);
-    }
-    if (search) {
-      this.p.stroke(230, 140, 0);
-      this.p.strokeWeight(6);
-      for (const index of search.closedNodes) {
-        const point = search.points[index];
-        this.p.point(point.x * 100, point.y * 100);
-      }
-      this.p.stroke(0, 150, 255);
-      this.p.strokeWeight(7);
-      for (const index of search.openNodes) {
-        const point = search.points[index];
-        this.p.point(point.x * 100, point.y * 100);
-      }
-      if (search.currentIndex !== null) {
-        const point = search.points[search.currentIndex];
-        this.p.stroke(255, 255, 255);
-        this.p.strokeWeight(10);
-        this.p.point(point.x * 100, point.y * 100);
-      }
-    }
-    this.p.stroke(0, 180, 0);
-    this.p.strokeWeight(3);
-    for (let index = 0; index < path.length - 1; index += 1) {
-      const start = path[index];
-      const end = path[index + 1];
-      this.p.line(start.x * 100, start.y * 100, end.x * 100, end.y * 100);
-    }
-    this.p.stroke(80, 80, 80);
-    this.p.strokeWeight(5);
-    for (const point of points) {
-      this.p.point(point.x * 100, point.y * 100);
-    }
-    this.p.noStroke();
-  }
-
-  calculate_next_step(p: p5) {
-    this.p = p;
+  calculate_next_step() {
     switch (this.current_state.planner.algorithm) {
       case "bug0":
         if (this.path_to_goal_is_clear()) {
@@ -1278,8 +1077,6 @@ export class Simulation {
             this.follow_wall(this.follow_direction);
           }
         }
-        this.drawDiscontinuities();
-        this.drawDiscontinuityLines();
         break;
       case "potentialField":
         //Calculate atractive force towards goal
@@ -1331,7 +1128,12 @@ export class Simulation {
           repulsive_force_y *= clampScale;
         }
 
-        this.drawPotentialFieldVectors(attractive_force_x, attractive_force_y, repulsive_force_x, repulsive_force_y);
+        this.potentialFieldForces = {
+          attractiveX: attractive_force_x,
+          attractiveY: attractive_force_y,
+          repulsiveX: repulsive_force_x,
+          repulsiveY: repulsive_force_y,
+        };
 
         //Combine attractive and repulsive forces
         this.ux = attractive_force_x + repulsive_force_x;
@@ -1406,12 +1208,6 @@ export class Simulation {
             this.uy = 0;
           }
         }
-        this.drawRoadMap(
-          this.roadmap.points,
-          this.roadmap.edges,
-          this.prmPath.slice(this.prmWaypointIndex),
-          this.prmSearch
-        );
         break;
       case "RRT":
         if (this.rrtNeedsToBeBuilt) {
@@ -1450,7 +1246,6 @@ export class Simulation {
           this.ux = 0;
           this.uy = 0;
         }
-        this.drawRrt();
         break;
       case "wavefront":
         if (this.wavefrontNeedsToBeBuilt) {
@@ -1492,7 +1287,6 @@ export class Simulation {
           this.ux = 0;
           this.uy = 0;
         }
-        this.drawWavefront();
         break;
       default:
         this.ux = 0;
