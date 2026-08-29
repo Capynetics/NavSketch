@@ -1,10 +1,16 @@
 import { useState, type Dispatch, type SetStateAction } from 'react';
 import type { ParametersState } from '../types/parameters';
 import maze1Scenario from '../assets/maze1.json';
+import maze2Scenario from '../assets/maze2.json';
+import arcadeMazeScenario from '../assets/arcade_maze.json';
+import bubblesScenario from '../assets/bubbles.json';
 import bugTrapScenario from '../assets/bug_trap.json';
 
 const scenarioObstaclesByName: Record<string, ParametersState['obstacles']> = {
   maze1: maze1Scenario.obstacles,
+  maze2: maze2Scenario.obstacles,
+  arcade_maze: arcadeMazeScenario.obstacles,
+  bubbles: bubblesScenario.obstacles,
   bug_trap: bugTrapScenario.obstacles,
 };
 
@@ -91,26 +97,6 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
     }));
   };
 
-  const updateVisualization = (patch: Partial<ParametersState['visualization']>) => {
-    setParameters((value) => ({
-      ...value,
-      visualization: {
-        ...value.visualization,
-        ...patch,
-      },
-    }));
-  };
-
-  const updateStatistics = (patch: Partial<ParametersState['statistics']>) => {
-    setParameters((value) => ({
-      ...value,
-      statistics: {
-        ...value.statistics,
-        ...patch,
-      },
-    }));
-  };
-
   return (
     <aside
       className="bg-dark text-white p-3 d-flex flex-column gap-3"
@@ -156,19 +142,6 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
 
             {!robotCollapsed && (
               <>
-                <div className="mb-3">
-              <label className="form-label small text-secondary">Model</label>
-              <select
-                className="form-select form-select-sm"
-                value={parameters.robot.model}
-                onChange={(event) => updateRobot({ model: event.target.value })}
-              >
-                <option value="differential">Differential</option>
-                <option value="holonomic">Holonomic</option>
-                <option value="ackermann">Ackermann</option>
-              </select>
-            </div>
-
             <div className="mb-3">
               <label className="form-label small text-secondary">Radius</label>
               <input
@@ -318,6 +291,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 <option value="potentialField">Potential Field</option>
                 <option value="PRM">PRM</option>
                 <option value="RRT">RRT</option>
+                <option value="wavefront">Wavefront</option>
               </select>
             </div>
 
@@ -372,73 +346,13 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
               >
                 <option value="maze1">Maze 1</option>
                 <option value="maze2">Maze 2</option>
+                <option value="arcade_maze">Arcade Maze</option>
+                <option value="bubbles">Bubbles</option>
                 <option value="bug_trap">Bug Trap</option>
                 <option value="open">Open</option>
               </select>
             </div>
 
-            <div className="mb-3">
-              <div className="small text-secondary mb-2">Visualization</div>
-              <div className="row g-2">
-                {[
-                  ['showGrid', 'Grid'],
-                  ['showRobot', 'Robot'],
-                  ['showGoal', 'Goal'],
-                  ['showObstacles', 'Obstacles'],
-                  ['showTrajectory', 'Trajectory'],
-                  ['showLidar', 'LiDAR'],
-                  ['showRobotHeading', 'Heading'],
-                  ['showCollisionRadius', 'Collision Radius'],
-                  ['showPlannerGraph', 'Planner Graph'],
-                ].map(([key, label]) => (
-                  <div className="col-6" key={key}>
-                    <div className="form-check form-switch">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        checked={parameters.visualization[key as keyof ParametersState['visualization']] as boolean}
-                        onChange={() =>
-                          updateVisualization({
-                            [key]: !parameters.visualization[key as keyof ParametersState['visualization']],
-                          } as Partial<ParametersState['visualization']>)
-                        }
-                        id={key}
-                      />
-                      <label className="form-check-label small text-secondary" htmlFor={key}>
-                        {label}
-                      </label>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-                <div className="small text-secondary mb-2">Statistics</div>
-                <div className="row g-2">
-                  {[
-                    ['showSimulationTime', 'Simulation Time'],
-                    ['showDistanceTravelled', 'Distance'],
-                  ].map(([key, label]) => (
-                    <div className="col-6" key={key}>
-                      <div className="form-check form-switch">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          checked={parameters.statistics[key as keyof ParametersState['statistics']] as boolean}
-                          onChange={() =>
-                            updateStatistics({
-                              [key]: !parameters.statistics[key as keyof ParametersState['statistics']],
-                            } as Partial<ParametersState['statistics']>)
-                          }
-                          id={key}
-                        />
-                        <label className="form-check-label small text-secondary" htmlFor={key}>
-                          {label}
-                        </label>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </>
             )}
           </div>

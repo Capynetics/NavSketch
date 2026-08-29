@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from './components/sidebar';
 import { SimulationCanvas } from "./components/SimulationCanvas";
 import type { ParametersState } from "./types/parameters";
-import maze1Scenario from './assets/maze1.json'; 
+import bubblesScenario from './assets/bubbles.json'; 
 
 function App() {
     const [parameters, setParameters] = useState<ParametersState>({
@@ -43,10 +43,10 @@ function App() {
     },
 
     environment: {
-        scenario: "maze1", // maze1 | bug_trap | custom
+        scenario: "bubbles",
     },
 
-    obstacles: maze1Scenario.obstacles, //
+    obstacles: bubblesScenario.obstacles,
 
     visualization: {
         showGrid: true,
@@ -57,7 +57,7 @@ function App() {
         showLidar: true,
         showRobotHeading: true,
         showCollisionRadius: false,
-        showPlannerGraph: false,
+                showPlannerGraph: true,
     },
 
     statistics: {

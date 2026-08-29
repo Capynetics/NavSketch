@@ -1,0 +1,66 @@
+{
+  "name": "Bubbles",
+  "description": "A field of circular obstacles with varied sizes.",
+  "obstacles": [
+    {
+      "id": "bubble-one",
+      "type": "circle",
+      "pose": { "x": 2.5, "y": 2.1, "theta": 0 },
+      "geometry": { "radius": 0.45 }
+    },
+    {
+      "id": "bubble-two",
+      "type": "circle",
+      "pose": { "x": 4.1, "y": 4.8, "theta": 0 },
+      "geometry": { "radius": 0.8 }
+    },
+    {
+      "id": "bubble-three",
+      "type": "circle",
+      "pose": { "x": 5.8, "y": 1.6, "theta": 0 },
+      "geometry": { "radius": 0.35 }
+    },
+    {
+      "id": "bubble-four",
+      "type": "circle",
+      "pose": { "x": 7.1, "y": 3.2, "theta": 0 },
+      "geometry": { "radius": 0.65 }
+    },
+    {
+      "id": "bubble-five",
+      "type": "circle",
+      "pose": { "x": 8.9, "y": 5.4, "theta": 0 },
+      "geometry": { "radius": 0.5 }
+    },
+    {
+      "id": "bubble-six",
+      "type": "circle",
+      "pose": { "x": 10.1, "y": 2, "theta": 0 },
+      "geometry": { "radius": 0.75 }
+    },
+    {
+      "id": "bubble-seven",
+      "type": "circle",
+      "pose": { "x": 11.3, "y": 4.2, "theta": 0 },
+      "geometry": { "radius": 0.3 }
+    },
+    {
+      "id": "bubble-eight",
+      "type": "circle",
+      "pose": { "x": 3.4, "y": 6.1, "theta": 0 },
+      "geometry": { "radius": 0.4 }
+    },
+    {
+      "id": "bubble-nine",
+      "type": "circle",
+      "pose": { "x": 6.3, "y": 6.2, "theta": 0 },
+      "geometry": { "radius": 0.55 }
+    },
+    {
+      "id": "bubble-ten",
+      "type": "circle",
+      "pose": { "x": 9.2, "y": 0.9, "theta": 0 },
+      "geometry": { "radius": 0.25 }
+    }
+  ]
+}

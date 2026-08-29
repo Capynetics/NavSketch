@@ -1,0 +1,96 @@
+{
+  "name": "Arcade Maze",
+  "description": "An original symmetric arcade-style corridor maze.",
+  "obstacles": [
+    {
+      "id": "top-wall",
+      "type": "rectangle",
+      "pose": { "x": 6.4, "y": 0.25, "theta": 0 },
+      "geometry": { "width": 12, "height": 0.3 }
+    },
+    {
+      "id": "bottom-wall",
+      "type": "rectangle",
+      "pose": { "x": 6.4, "y": 6.95, "theta": 0 },
+      "geometry": { "width": 12, "height": 0.3 }
+    },
+    {
+      "id": "left-wall",
+      "type": "rectangle",
+      "pose": { "x": 0.25, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.3, "height": 6.4 }
+    },
+    {
+      "id": "right-wall",
+      "type": "rectangle",
+      "pose": { "x": 12.55, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.3, "height": 6.4 }
+    },
+    {
+      "id": "upper-left-bar",
+      "type": "rectangle",
+      "pose": { "x": 3.2, "y": 1.55, "theta": 0 },
+      "geometry": { "width": 3.8, "height": 0.35 }
+    },
+    {
+      "id": "upper-right-bar",
+      "type": "rectangle",
+      "pose": { "x": 9.6, "y": 1.55, "theta": 0 },
+      "geometry": { "width": 3.8, "height": 0.35 }
+    },
+    {
+      "id": "lower-left-bar",
+      "type": "rectangle",
+      "pose": { "x": 3.2, "y": 5.65, "theta": 0 },
+      "geometry": { "width": 3.8, "height": 0.35 }
+    },
+    {
+      "id": "lower-right-bar",
+      "type": "rectangle",
+      "pose": { "x": 9.6, "y": 5.65, "theta": 0 },
+      "geometry": { "width": 3.8, "height": 0.35 }
+    },
+    {
+      "id": "left-inner-pillar",
+      "type": "rectangle",
+      "pose": { "x": 2.5, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 3.3 }
+    },
+    {
+      "id": "right-inner-pillar",
+      "type": "rectangle",
+      "pose": { "x": 10.3, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 3.3 }
+    },
+    {
+      "id": "central-top",
+      "type": "rectangle",
+      "pose": { "x": 6.4, "y": 2.45, "theta": 0 },
+      "geometry": { "width": 2.6, "height": 0.35 }
+    },
+    {
+      "id": "central-bottom",
+      "type": "rectangle",
+      "pose": { "x": 6.4, "y": 4.75, "theta": 0 },
+      "geometry": { "width": 2.6, "height": 0.35 }
+    },
+    {
+      "id": "central-left",
+      "type": "rectangle",
+      "pose": { "x": 5.1, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 2.65 }
+    },
+    {
+      "id": "central-right",
+      "type": "rectangle",
+      "pose": { "x": 7.7, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 2.65 }
+    },
+    {
+      "id": "central-gate",
+      "type": "rectangle",
+      "pose": { "x": 6.4, "y": 3.6, "theta": 0 },
+      "geometry": { "width": 1.1, "height": 0.25 }
+    }
+  ]
+}

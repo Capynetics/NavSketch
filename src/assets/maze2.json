@@ -1,0 +1,54 @@
+{
+  "name": "Alternating Gates",
+  "description": "An alternating-gate course with circular hazards.",
+  "obstacles": [
+    {
+      "id": "west-gate",
+      "type": "rectangle",
+      "pose": { "x": 3, "y": 2.1, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 4.2 }
+    },
+    {
+      "id": "east-gate-one",
+      "type": "rectangle",
+      "pose": { "x": 5.5, "y": 4.95, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 4.5 }
+    },
+    {
+      "id": "west-gate-two",
+      "type": "rectangle",
+      "pose": { "x": 8, "y": 2.1, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 4.2 }
+    },
+    {
+      "id": "east-gate-two",
+      "type": "rectangle",
+      "pose": { "x": 10.5, "y": 4.95, "theta": 0 },
+      "geometry": { "width": 0.35, "height": 4.5 }
+    },
+    {
+      "id": "lower-hazard-one",
+      "type": "circle",
+      "pose": { "x": 4.2, "y": 5.2, "theta": 0 },
+      "geometry": { "radius": 0.3 }
+    },
+    {
+      "id": "upper-hazard",
+      "type": "circle",
+      "pose": { "x": 6.7, "y": 1.45, "theta": 0 },
+      "geometry": { "radius": 0.35 }
+    },
+    {
+      "id": "lower-hazard-two",
+      "type": "circle",
+      "pose": { "x": 9.2, "y": 5.2, "theta": 0 },
+      "geometry": { "radius": 0.35 }
+    },
+    {
+      "id": "goal-hazard",
+      "type": "circle",
+      "pose": { "x": 11.5, "y": 1.2, "theta": 0 },
+      "geometry": { "radius": 0.3 }
+    }
+  ]
+}
