@@ -20,8 +20,8 @@ function App() {
         maxLinearVelocity: 1.0,
         maxAngularVelocity: 2.0,
         currentPose: {
-            x: 1,
-            y: 1,
+            x: 1.5,
+            y: 4,
             theta: 0,
         },
     },
