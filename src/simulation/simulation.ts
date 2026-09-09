@@ -72,6 +72,10 @@ export class Simulation {
   private wavefrontPhase: WavefrontPhase = "propagating";
   private wavefrontNeedsToBeBuilt: boolean = true;
   private potentialFieldForces: { attractiveX: number; attractiveY: number; repulsiveX: number; repulsiveY: number } | null = null;
+  tangent_state: string = "go_to_target";
+  d_followed: number = Infinity;
+  d_reach: number | undefined;
+  d_temp: number | undefined;
 
   get is_bug2_started(): boolean {
     return this.bug2_started;
@@ -189,6 +193,81 @@ export class Simulation {
     this.sensor_ranges = this.lidar.senseEnvironment(this.current_state);
 
     return this.sensor_ranges;
+  }
+
+  /**
+   * Returns the minimum Euclidean distance from the sensed boundary of the
+   * closest obstacle to the goal. Only the contiguous cluster of LiDAR beams
+   * around the closest reading is considered; all other obstacles are ignored.
+   * If no boundary was sensed, returns Infinity.
+   */
+  get_min_distance_from_sensed_boundary_to_goal(): number {
+    const ranges = this.sensor_ranges;
+    if (ranges.length === 0) {
+      return Infinity;
+    }
+
+    const maxRange = this.current_state.lidar.range;
+    const isOutOfRange = (range: number) =>
+      !Number.isFinite(range) || range >= maxRange - 1e-9;
+
+    // Find the index of the closest non-max-range reading.
+    let minRange = Infinity;
+    let minIndex = -1;
+    for (let i = 0; i < ranges.length; i += 1) {
+      const range = ranges[i];
+      if (!isOutOfRange(range) && range < minRange) {
+        minRange = range;
+        minIndex = i;
+      }
+    }
+
+    if (minIndex === -1) {
+      return Infinity;
+    }
+
+    // Collect the contiguous block of finite readings around the closest beam.
+    const obstacleIndices: number[] = [minIndex];
+    for (let direction of [-1, 1]) {
+      for (
+        let i = minIndex + direction;
+        i >= 0 && i < ranges.length;
+        i += direction
+      ) {
+        if (isOutOfRange(ranges[i])) {
+          break;
+        }
+        obstacleIndices.push(i);
+      }
+    }
+
+    const robotPose = this.current_state.robot.currentPose;
+    const goal = this.current_state.goal;
+    const fieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
+    const beamCount = ranges.length;
+    const isFullCircle = Math.abs(fieldOfView) >= 2 * Math.PI;
+    const angleStep = beamCount > 1
+      ? fieldOfView / (isFullCircle ? beamCount : beamCount - 1)
+      : 0;
+    const startAngle = robotPose.theta - fieldOfView / 2;
+
+    let minDistance = Infinity;
+    for (const i of obstacleIndices) {
+      const range = ranges[i];
+      const angle = startAngle + i * angleStep;
+      const boundaryX = robotPose.x + range * Math.cos(angle);
+      const boundaryY = robotPose.y + range * Math.sin(angle);
+      const distanceToGoal = Math.hypot(
+        goal.x - boundaryX,
+        goal.y - boundaryY
+      );
+
+      if (distanceToGoal < minDistance) {
+        minDistance = distanceToGoal;
+      }
+    }
+
+    return minDistance;
   }
 
   get_discontinuities(ranges: number[]): number[] {
@@ -391,6 +470,7 @@ export class Simulation {
     x4: number,
     y4: number
   ): boolean {
+    const epsilon = 1e-9;
     const orientation = (
       ax: number,
       ay: number,
@@ -407,28 +487,27 @@ export class Simulation {
       cx: number,
       cy: number
     ) =>
-      Math.min(ax, cx) <= bx &&
-      bx <= Math.max(ax, cx) &&
-      Math.min(ay, cy) <= by &&
-      by <= Math.max(ay, cy);
+      bx >= Math.min(ax, cx) - epsilon &&
+      bx <= Math.max(ax, cx) + epsilon &&
+      by >= Math.min(ay, cy) - epsilon &&
+      by <= Math.max(ay, cy) + epsilon;
 
     const orientation1 = orientation(x1, y1, x2, y2, x3, y3);
     const orientation2 = orientation(x1, y1, x2, y2, x4, y4);
     const orientation3 = orientation(x3, y3, x4, y4, x1, y1);
     const orientation4 = orientation(x3, y3, x4, y4, x2, y2);
+    const hasOppositeSigns = (first: number, second: number) =>
+      (first > epsilon && second < -epsilon) || (first < -epsilon && second > epsilon);
 
-    if (
-      ((orientation1 > 0 && orientation2 < 0) || (orientation1 < 0 && orientation2 > 0)) &&
-      ((orientation3 > 0 && orientation4 < 0) || (orientation3 < 0 && orientation4 > 0))
-    ) {
+    if (hasOppositeSigns(orientation1, orientation2) && hasOppositeSigns(orientation3, orientation4)) {
       return true;
     }
 
     return (
-      (orientation1 === 0 && isOnSegment(x1, y1, x3, y3, x2, y2)) ||
-      (orientation2 === 0 && isOnSegment(x1, y1, x4, y4, x2, y2)) ||
-      (orientation3 === 0 && isOnSegment(x3, y3, x1, y1, x4, y4)) ||
-      (orientation4 === 0 && isOnSegment(x3, y3, x2, y2, x4, y4))
+      (Math.abs(orientation1) <= epsilon && isOnSegment(x1, y1, x3, y3, x2, y2)) ||
+      (Math.abs(orientation2) <= epsilon && isOnSegment(x1, y1, x4, y4, x2, y2)) ||
+      (Math.abs(orientation3) <= epsilon && isOnSegment(x3, y3, x1, y1, x4, y4)) ||
+      (Math.abs(orientation4) <= epsilon && isOnSegment(x3, y3, x2, y2, x4, y4))
     );
   }
 
@@ -463,7 +542,7 @@ export class Simulation {
 
     return false;
   }
-  
+
   private pathIsClear(start: RoadmapPoint, end: RoadmapPoint): boolean {
     const distance = Math.hypot(end.x - start.x, end.y - start.y);
     const sampleSpacing = Math.max(this.current_state.robot.radius / 2, 0.01);
@@ -696,9 +775,9 @@ export class Simulation {
     const randomTarget = Math.random() < 0.1
       ? goal
       : {
-          x: Math.random() * this.current_state.simulation.canvasWidth / 100,
-          y: Math.random() * this.current_state.simulation.canvasHeight / 100,
-        };
+        x: Math.random() * this.current_state.simulation.canvasWidth / 100,
+        y: Math.random() * this.current_state.simulation.canvasHeight / 100,
+      };
     let nearestIndex = 0;
     let nearestDistance = Infinity;
     for (let index = 0; index < this.rrtNodes.length; index += 1) {
@@ -983,99 +1062,171 @@ export class Simulation {
         }
         break;
       case "tangentBug":
-        let discontinuities = this.get_discontinuities(this.sensor_ranges);
-        let lines_intersected = false;
-        const fieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
-        const startAngle = this.current_state.robot.currentPose.theta - fieldOfView / 2;
-        const isFullCircle = Math.abs(fieldOfView) >= 2 * Math.PI;
-        const angleStep = this.sensor_ranges.length > 1
-          ? fieldOfView / (isFullCircle ? this.sensor_ranges.length : this.sensor_ranges.length - 1)
-          : 0;
-        let bestIndex = -1;
-        if (this.path_to_goal_is_clear() && !this.obstacle_encountered) {
-          if (discontinuities.length > 1) {
-            //check if robot to goal line intersects with any discontinuity lines
-            let discontinuity_lines = this.get_discontinuity_lines();
-            for (let i = 0; i < discontinuity_lines.length; i++) {
-              const { start, end } = discontinuity_lines[i];
-              const startRange = Math.min(this.sensor_ranges[start], this.sensor_ranges[start + 1]);
-              const endRange = Math.min(this.sensor_ranges[end], this.sensor_ranges[end + 1]);
-              const startBeamAngle = startAngle + start * angleStep;
-              const endBeamAngle = startAngle + end * angleStep;
+        this.d_temp = this.get_min_distance_from_sensed_boundary_to_goal();
+        if (this.d_temp < this.d_followed) {
+          this.d_followed = this.d_temp;
+        }
+        switch (this.tangent_state) {
+          case "go_to_target":
+            // Move towards the goal until a discontinuity is detected
+            this.move_towards_goal();
+            let discontiuity_lines = this.get_discontinuity_lines();
+            if (this.path_to_goal_is_clear()) {
+              this.move_towards_goal();
+            } else {
+              this.follow_wall(this.follow_direction);
+            }
+            if (discontiuity_lines.length > 0) {
+              this.tangent_state = "block_check";
+            }
+            break;
+          case "block_check":
+            // Check if robot-goal line intersects with any discontinuity line
+            let intersects = false;
+            const fieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
+            const beamCount = this.sensor_ranges.length;
+            const isFullCircle = Math.abs(fieldOfView) >= 2 * Math.PI;
+            const angleStep = beamCount > 1
+              ? fieldOfView / (isFullCircle ? beamCount : beamCount - 1)
+              : 0;
+            const startAngle = this.current_state.robot.currentPose.theta - fieldOfView / 2;
+            const pointAtDiscontinuity = (index: number) => {
+              const range = this.sensor_ranges[index];
+              const angle = startAngle + index * angleStep;
+              return {
+                x: this.current_state.robot.currentPose.x + range * Math.cos(angle),
+                y: this.current_state.robot.currentPose.y + range * Math.sin(angle),
+              };
+            };
+            for (let line of this.get_discontinuity_lines()) {
+              const start = pointAtDiscontinuity(line.start);
+              const end = pointAtDiscontinuity(line.end);
               if (this.lines_intersect(
                 this.current_state.robot.currentPose.x,
                 this.current_state.robot.currentPose.y,
                 this.current_state.goal.x,
                 this.current_state.goal.y,
-                this.current_state.robot.currentPose.x + Math.cos(startBeamAngle) * startRange,
-                this.current_state.robot.currentPose.y + Math.sin(startBeamAngle) * startRange,
-                this.current_state.robot.currentPose.x + Math.cos(endBeamAngle) * endRange,
-                this.current_state.robot.currentPose.y + Math.sin(endBeamAngle) * endRange
+                start.x,
+                start.y,
+                end.x,
+                end.y
               )) {
-                lines_intersected = true;
+                intersects = true;
                 break;
               }
             }
-            if (lines_intersected) {
-              let minHeuristic = Infinity;
-              for (let i = 0; i < discontinuities.length; i++) {
-                let heuristic = this.calculate_discontinuity_heuristic(discontinuities[i]);
-                if (heuristic < minHeuristic) {
-                  minHeuristic = heuristic;
-                  bestIndex = discontinuities[i];
-                }
-              }
-              // Move towards the discontinuity with the minimum heuristic
-              if (bestIndex !== -1) {
-                this.move_towards_x_y(
-                  this.current_state.robot.currentPose.x + Math.cos(startAngle + bestIndex * angleStep) * this.sensor_ranges[bestIndex],
-                  this.current_state.robot.currentPose.y + Math.sin(startAngle + bestIndex * angleStep) * this.sensor_ranges[bestIndex]
+            this.tangent_state = intersects ? "chose_side" : "go_to_target";
+            break;   
+          case "chose_side":
+            // Choose which side to follow the discontinuity line based on heuristic distance
+            const discontinuityLines = this.get_discontinuity_lines();
+            const tangentFieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
+            const tangentBeamCount = this.sensor_ranges.length;
+            const tangentIsFullCircle = Math.abs(tangentFieldOfView) >= 2 * Math.PI;
+            const tangentAngleStep = tangentBeamCount > 1
+              ? tangentFieldOfView / (tangentIsFullCircle ? tangentBeamCount : tangentBeamCount - 1)
+              : 0;
+            const tangentStartAngle = this.current_state.robot.currentPose.theta - tangentFieldOfView / 2;
+            const pointAtIndex = (index: number) => {
+              const range = this.sensor_ranges[index];
+              const angle = tangentStartAngle + index * tangentAngleStep;
+              return {
+                x: this.current_state.robot.currentPose.x + range * Math.cos(angle),
+                y: this.current_state.robot.currentPose.y + range * Math.sin(angle),
+              };
+            };
+            const candidateIndices = discontinuityLines
+              .filter((line) => {
+                const start = pointAtIndex(line.start);
+                const end = pointAtIndex(line.end);
+                return this.lines_intersect(
+                  this.current_state.robot.currentPose.x,
+                  this.current_state.robot.currentPose.y,
+                  this.current_state.goal.x,
+                  this.current_state.goal.y,
+                  start.x,
+                  start.y,
+                  end.x,
+                  end.y
                 );
+              })
+              .flatMap((line) => [line.start, line.end]);
+
+            let bestDiscontinuityIndex: number | null = null;
+            let bestHeuristic = Infinity;
+            for (const index of candidateIndices) {
+              const heuristic = this.calculate_discontinuity_heuristic(index);
+              if (heuristic < bestHeuristic) {
+                bestHeuristic = heuristic;
+                bestDiscontinuityIndex = index;
               }
+            }
+
+            if (bestDiscontinuityIndex === null) {
+              this.tangent_state = "go_to_target";
             } else {
-              this.move_towards_goal();
+              this.follow_direction = this.left_or_right(bestDiscontinuityIndex);
+              this.tangent_state = "follow_discontinuity";
             }
-          } else {
-            this.move_towards_goal();
-          }
-        } else {
-          let minHeuristic = Infinity;
-          for (let i = 0; i < discontinuities.length; i++) {
-            let heuristic = this.calculate_discontinuity_heuristic(discontinuities[i]);
-            if (heuristic < minHeuristic) {
-              minHeuristic = heuristic;
-              bestIndex = discontinuities[i];
-            }
-          }
-          if (!this.obstacle_encountered && bestIndex !== -1) {
-            if (bestIndex !== -1) {
-              this.follow_direction = this.left_or_right(bestIndex);
-            }
-          }
-
-          this.obstacle_encountered = true;
-          if (bestIndex === -1) {
-            this.follow_wall(this.follow_direction);
             break;
-          }
+          case "follow_discontinuity":
+            // Go to the discontinuity point that minimizes the heuristic
+            const discontinuities = this.get_discontinuities(this.sensor_ranges);
+            let targetDiscontinuityIndex: number | null = null;
+            let targetHeuristic = Infinity;
+            for (const index of discontinuities) {
+              const heuristic = this.calculate_discontinuity_heuristic(index);
+              if (heuristic < targetHeuristic) {
+                targetHeuristic = heuristic;
+                targetDiscontinuityIndex = index;
+              }
+            }
 
-          //if robot distance to goal is less than bestIndex distance to goal, move towards goal, else follow wall
-          let distance_to_goal = Math.sqrt(
-            Math.pow(this.current_state.robot.currentPose.x - this.current_state.goal.x, 2) +
-            Math.pow(this.current_state.robot.currentPose.y - this.current_state.goal.y, 2)
-          );
+            if (targetDiscontinuityIndex === null) {
+              this.tangent_state = "go_to_target";
+              this.move_towards_goal();
+              break;
+            }
 
-          let bestIndex_distance_to_goal = Math.sqrt(
-            Math.pow(this.current_state.robot.currentPose.x + Math.cos(startAngle + bestIndex * angleStep) * this.sensor_ranges[bestIndex] - this.current_state.goal.x, 2) +
-            Math.pow(this.current_state.robot.currentPose.y + Math.sin(startAngle + bestIndex * angleStep) * this.sensor_ranges[bestIndex] - this.current_state.goal.y, 2)
-          );
+            const targetRange = Math.min(
+              this.sensor_ranges[targetDiscontinuityIndex],
+              this.sensor_ranges[targetDiscontinuityIndex + 1]
+            );
+            const followFieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
+            const followBeamCount = this.sensor_ranges.length;
+            const followIsFullCircle = Math.abs(followFieldOfView) >= 2 * Math.PI;
+            const followAngleStep = followBeamCount > 1
+              ? followFieldOfView / (followIsFullCircle ? followBeamCount : followBeamCount - 1)
+              : 0;
+            const targetAngle = this.current_state.robot.currentPose.theta - followFieldOfView / 2
+              + targetDiscontinuityIndex * followAngleStep;
+            const targetX = this.current_state.robot.currentPose.x + targetRange * Math.cos(targetAngle);
+            const targetY = this.current_state.robot.currentPose.y + targetRange * Math.sin(targetAngle);
+            const closestObstacleRange = Math.min(...this.sensor_ranges);
+            const obstacleFollowDistance = this.current_state.robot.radius + 0.05;
 
-          if (distance_to_goal < bestIndex_distance_to_goal) {
-            this.move_towards_goal();
-            this.obstacle_encountered = false;
-          } else {
+            if (closestObstacleRange <= obstacleFollowDistance) {
+              this.tangent_state = "follow_obstacle";
+            } else {
+              this.move_towards_x_y(targetX, targetY);
+            }
+            break;
+          case "follow_obstacle":
+            // this.d_reach is equal to the distance from the robot to the goal 
+            this.d_reach = Math.sqrt(
+              Math.pow(this.current_state.goal.x - this.current_state.robot.currentPose.x, 2) +
+              Math.pow(this.current_state.goal.y - this.current_state.robot.currentPose.y, 2)
+            );
+            if (this.d_reach < this.d_followed) {
+              this.tangent_state = "go_to_target";
+              break;
+            }
+
             this.follow_wall(this.follow_direction);
-          }
+
+            break;
+          default:
+            break;
         }
         break;
       case "potentialField":
