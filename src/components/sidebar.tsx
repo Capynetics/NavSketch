@@ -290,6 +290,7 @@ function Sidebar({ parameters, setParameters }: SidebarProps) {
                 <option value="tangentBug">Tangent Bug</option>
                 <option value="potentialField">Potential Field</option>
                 <option value="PRM">PRM</option>
+                <option value="PRM_GRID">PRM (Grid)</option>
                 <option value="RRT">RRT</option>
                 <option value="wavefront">Wavefront</option>
               </select>

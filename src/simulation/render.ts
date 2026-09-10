@@ -151,6 +151,7 @@ export class Render {
         }
         break;
       case "PRM":
+      case "PRM_GRID":
         this.drawRoadMap(p, plannerRenderData.roadmap.points, plannerRenderData.roadmap.edges, plannerRenderData.prmPath, plannerRenderData.prmSearch);
         break;
       case "RRT":

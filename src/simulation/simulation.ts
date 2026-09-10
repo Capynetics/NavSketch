@@ -60,6 +60,10 @@ export class Simulation {
   private prmPhase: PrmPhase = "sampling";
   private prmConnectionIndex: number = 0;
   private prmSearch: RoadmapSearch | null = null;
+  private prmGridPoints: RoadmapPoint[] = [];
+  private prmGridIndex: number = 0;
+  private prmGridColumns: number = 0;
+  private prmGridCellToPointIndex: number[] = [];
   private rrtNodes: RrtNode[] = [];
   private rrtPath: RoadmapPoint[] = [];
   private rrtWaypointIndex: number = 0;
@@ -576,6 +580,71 @@ export class Simulation {
         this.roadmap.points.push({ x, y });
         sampleCount -= 1;
       }
+    }
+  }
+
+  private generatePrmGridPoints(): RoadmapPoint[] {
+    // Spacing chosen so a full canvas yields roughly the same point count as PRM's 1000 random samples,
+    // and is uniform in x and y so cells are square with no diagonal neighbors.
+    const width = this.current_state.simulation.canvasWidth / 100;
+    const height = this.current_state.simulation.canvasHeight / 100;
+    const spacing = Math.sqrt((width * height) / 1000) || 0.1;
+    const columns = Math.max(1, Math.floor(width / spacing));
+    const rows = Math.max(1, Math.floor(height / spacing));
+    const points: RoadmapPoint[] = [];
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < columns; column += 1) {
+        points.push({ x: (column + 0.5) * spacing, y: (row + 0.5) * spacing });
+      }
+    }
+    this.prmGridColumns = columns;
+    this.prmGridCellToPointIndex = Array(points.length).fill(-1);
+    return points;
+  }
+
+  private addRoadmapGridSamples(sampleCount: number) {
+    while (sampleCount > 0 && this.prmGridIndex < this.prmGridPoints.length) {
+      const cellIndex = this.prmGridIndex;
+      const point = this.prmGridPoints[cellIndex];
+      this.prmGridIndex += 1;
+      const inObstacle = this.current_state.obstacles.some((obstacle) =>
+        this.point_in_obstacle(point.x, point.y, obstacle)
+      );
+      if (!inObstacle) {
+        this.roadmap.points.push(point);
+        this.prmGridCellToPointIndex[cellIndex] = this.roadmap.points.length - 1;
+        sampleCount -= 1;
+      }
+    }
+  }
+
+  private connectPrmGridPoints(connectionCount: number) {
+    // Only connect orthogonal grid neighbors (right/down) so the roadmap forms a square grid with no diagonals
+    const columns = this.prmGridColumns;
+    const totalCells = this.prmGridCellToPointIndex.length;
+
+    while (connectionCount > 0 && this.prmConnectionIndex < totalCells) {
+      const cellIndex = this.prmConnectionIndex;
+      const pointIndex = this.prmGridCellToPointIndex[cellIndex];
+      if (pointIndex !== -1) {
+        const column = cellIndex % columns;
+        const rightCell = column + 1 < columns ? cellIndex + 1 : -1;
+        const downCell = cellIndex + columns < totalCells ? cellIndex + columns : -1;
+        for (const neighborCell of [rightCell, downCell]) {
+          if (neighborCell === -1) {
+            continue;
+          }
+          const neighborPointIndex = this.prmGridCellToPointIndex[neighborCell];
+          if (neighborPointIndex === -1) {
+            continue;
+          }
+          if (this.pathIsClear(this.roadmap.points[pointIndex], this.roadmap.points[neighborPointIndex])) {
+            this.roadmap.edges.push({ start: pointIndex, end: neighborPointIndex });
+          }
+        }
+      }
+      this.prmConnectionIndex += 1;
+      connectionCount -= 1;
     }
   }
 
@@ -1299,6 +1368,7 @@ export class Simulation {
         this.uy /= combined_distance;
         break;
       case "PRM":
+      case "PRM_GRID":
         if (this.map_needs_to_be_built) {
           this.roadmap = this.buildRoadMap();
           this.prmPath = [];
@@ -1306,24 +1376,46 @@ export class Simulation {
           this.prmPhase = "sampling";
           this.prmConnectionIndex = 0;
           this.prmSearch = null;
+          if (this.current_state.planner.algorithm === "PRM_GRID") {
+            this.prmGridPoints = this.generatePrmGridPoints();
+            this.prmGridIndex = 0;
+          }
           this.map_needs_to_be_built = false;
         }
 
         if (this.prmPhase === "sampling") {
-          this.addRoadmapSamples(Math.min(12, 1000 - this.roadmap.points.length));
-          if (this.roadmap.points.length === 1000) {
-            this.prmPhase = "connecting";
+          if (this.current_state.planner.algorithm === "PRM_GRID") {
+            this.addRoadmapGridSamples(12);
+            if (this.prmGridIndex >= this.prmGridPoints.length) {
+              this.prmPhase = "connecting";
+            }
+          } else {
+            this.addRoadmapSamples(Math.min(12, 1000 - this.roadmap.points.length));
+            if (this.roadmap.points.length === 1000) {
+              this.prmPhase = "connecting";
+            }
           }
           this.ux = 0;
           this.uy = 0;
         } else if (this.prmPhase === "connecting") {
-          this.connectRoadmapPoints(20);
-          if (this.prmConnectionIndex === this.roadmap.points.length) {
-            this.prmSearch = this.beginRoadMapSearch(
-              this.current_state.robot.currentPose,
-              this.current_state.goal
-            );
-            this.prmPhase = "searching";
+          if (this.current_state.planner.algorithm === "PRM_GRID") {
+            this.connectPrmGridPoints(20);
+            if (this.prmConnectionIndex === this.prmGridCellToPointIndex.length) {
+              this.prmSearch = this.beginRoadMapSearch(
+                this.current_state.robot.currentPose,
+                this.current_state.goal
+              );
+              this.prmPhase = "searching";
+            }
+          } else {
+            this.connectRoadmapPoints(20);
+            if (this.prmConnectionIndex === this.roadmap.points.length) {
+              this.prmSearch = this.beginRoadMapSearch(
+                this.current_state.robot.currentPose,
+                this.current_state.goal
+              );
+              this.prmPhase = "searching";
+            }
           }
           this.ux = 0;
           this.uy = 0;
