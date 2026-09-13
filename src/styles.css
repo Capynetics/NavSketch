@@ -30,7 +30,8 @@ button, input, select { font: inherit; }
 }
 
 .brand-lockup { display: flex; align-items: center; gap: 12px; }
-.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; color: #d9ff6d; background: #143b36; border-radius: 7px; font-size: 21px; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; color: #d9ff6d; background: #143b36; border-radius: 7px; font-size: 21px; overflow: hidden; }
+.brand-mark img { width: 100%; height: 100%; display: block; }
 .brand-name { color: #17352f; font-size: 20px; font-weight: 700; line-height: 1; letter-spacing: 0; }
 .brand-context, .eyebrow { color: #5d7069; font-family: "DM Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
 .brand-context { margin-top: 5px; }

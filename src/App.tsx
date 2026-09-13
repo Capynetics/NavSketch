@@ -70,7 +70,7 @@ function App() {
         <div className="app-shell">
             <header className="workspace-header">
                 <div className="brand-lockup">
-                    <div className="brand-mark"><i className="bi bi-bezier2" /></div>
+                    <div className="brand-mark"><img src={`${import.meta.env.BASE_URL}logo.svg`} alt="NavSketch logo" /></div>
                     <div>
                         <div className="brand-name">NavSketch</div>
                         <div className="brand-context">Motion planning laboratory</div>
