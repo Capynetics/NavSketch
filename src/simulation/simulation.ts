@@ -80,6 +80,7 @@ export class Simulation {
   d_followed: number = Infinity;
   d_reach: number | undefined;
   d_temp: number | undefined;
+  private followedDiscontinuityPoint: RoadmapPoint | null = null;
 
   get is_bug2_started(): boolean {
     return this.bug2_started;
@@ -1233,63 +1234,93 @@ export class Simulation {
 
             if (bestDiscontinuityIndex === null) {
               this.tangent_state = "go_to_target";
+              this.followedDiscontinuityPoint = null;
             } else {
               this.follow_direction = this.left_or_right(bestDiscontinuityIndex);
+              this.followedDiscontinuityPoint = pointAtIndex(bestDiscontinuityIndex);
               this.tangent_state = "follow_discontinuity";
             }
             break;
-          case "follow_discontinuity":
-            // Go to the discontinuity point that minimizes the heuristic
-            const discontinuities = this.get_discontinuities(this.sensor_ranges);
-            let targetDiscontinuityIndex: number | null = null;
-            let targetHeuristic = Infinity;
-            for (const index of discontinuities) {
-              const heuristic = this.calculate_discontinuity_heuristic(index);
-              if (heuristic < targetHeuristic) {
-                targetHeuristic = heuristic;
-                targetDiscontinuityIndex = index;
-              }
-            }
-
-            if (targetDiscontinuityIndex === null) {
-              this.tangent_state = "go_to_target";
-              this.move_towards_goal();
-              break;
-            }
-
-            const targetRange = Math.min(
-              this.sensor_ranges[targetDiscontinuityIndex],
-              this.sensor_ranges[targetDiscontinuityIndex + 1]
-            );
+          case "follow_discontinuity": 
             const followFieldOfView = (this.current_state.lidar.fieldOfView * Math.PI) / 180;
             const followBeamCount = this.sensor_ranges.length;
             const followIsFullCircle = Math.abs(followFieldOfView) >= 2 * Math.PI;
             const followAngleStep = followBeamCount > 1
               ? followFieldOfView / (followIsFullCircle ? followBeamCount : followBeamCount - 1)
               : 0;
-            const targetAngle = this.current_state.robot.currentPose.theta - followFieldOfView / 2
-              + targetDiscontinuityIndex * followAngleStep;
-            const targetX = this.current_state.robot.currentPose.x + targetRange * Math.cos(targetAngle);
-            const targetY = this.current_state.robot.currentPose.y + targetRange * Math.sin(targetAngle);
+            const followStartAngle = this.current_state.robot.currentPose.theta - followFieldOfView / 2;
+            const pointAtDiscontinuityIndex = (index: number) => {
+              const range = Math.min(this.sensor_ranges[index], this.sensor_ranges[index + 1]);
+              const angle = followStartAngle + index * followAngleStep;
+              return {
+                x: this.current_state.robot.currentPose.x + range * Math.cos(angle),
+                y: this.current_state.robot.currentPose.y + range * Math.sin(angle),
+              };
+            };
+
+            const discontinuities = this.get_discontinuities(this.sensor_ranges).filter(
+              (index) => index + 1 < this.sensor_ranges.length
+            );
+
+            // Stay locked onto the discontinuity we were already following (closest by
+            // position) instead of re-picking the globally cheapest one every tick, which
+            // caused the robot to keep flip-flopping between two discontinuities.
+            let targetDiscontinuityIndex: number | null = null;
+            if (this.followedDiscontinuityPoint) {
+              let bestDistance = Infinity;
+              for (const index of discontinuities) {
+                const point = pointAtDiscontinuityIndex(index);
+                const distance = Math.hypot(
+                  point.x - this.followedDiscontinuityPoint.x,
+                  point.y - this.followedDiscontinuityPoint.y
+                );
+                if (distance < bestDistance) {
+                  bestDistance = distance;
+                  targetDiscontinuityIndex = index;
+                }
+              }
+            }
+
+            if (targetDiscontinuityIndex === null) {
+              let targetHeuristic = Infinity;
+              for (const index of discontinuities) {
+                const heuristic = this.calculate_discontinuity_heuristic(index);
+                if (heuristic < targetHeuristic) {
+                  targetHeuristic = heuristic;
+                  targetDiscontinuityIndex = index;
+                }
+              }
+            }
+
+            if (targetDiscontinuityIndex === null) {
+              this.tangent_state = "go_to_target";
+              this.followedDiscontinuityPoint = null;
+              this.move_towards_goal();
+              break;
+            }
+
+            const targetPoint = pointAtDiscontinuityIndex(targetDiscontinuityIndex);
+            this.followedDiscontinuityPoint = targetPoint;
             const closestObstacleRange = Math.min(...this.sensor_ranges);
             const obstacleFollowDistance = this.current_state.robot.radius + 0.05;
 
             if (closestObstacleRange <= obstacleFollowDistance) {
               this.tangent_state = "follow_obstacle";
+              this.followedDiscontinuityPoint = null;
             } else {
-              this.move_towards_x_y(targetX, targetY);
+              this.move_towards_x_y(targetPoint.x, targetPoint.y);
             }
             break;
           case "follow_obstacle":
             // this.d_reach is equal to the distance from the robot to the goal 
-            this.d_reach = Math.sqrt(
-              Math.pow(this.current_state.goal.x - this.current_state.robot.currentPose.x, 2) +
-              Math.pow(this.current_state.goal.y - this.current_state.robot.currentPose.y, 2)
-            );
-            if (this.d_reach < this.d_followed) {
-              this.tangent_state = "go_to_target";
-              break;
-            }
+             this.d_reach = Math.sqrt(
+               Math.pow(this.current_state.goal.x - this.current_state.robot.currentPose.x, 2) +
+               Math.pow(this.current_state.goal.y - this.current_state.robot.currentPose.y, 2)
+             );
+             if (this.d_reach < this.d_followed) {
+               this.tangent_state = "go_to_target";
+               break;
+             }
 
             this.follow_wall(this.follow_direction);
 
